@@ -1,0 +1,6 @@
+{
+  "name": "RePaIR",
+  "description": "Start Your Day - A positive, playful digital companion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

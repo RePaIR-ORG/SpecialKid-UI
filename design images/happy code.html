@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffefec",
+                    "secondary-container": "#fdd400",
+                    "on-surface": "#2a2b51",
+                    "on-surface-variant": "#575881",
+                    "surface-container-low": "#f2efff",
+                    "error": "#b41340",
+                    "on-tertiary-fixed": "#360600",
+                    "on-tertiary-fixed-variant": "#721600",
+                    "surface-container": "#e8e6ff",
+                    "primary": "#004be2",
+                    "surface-bright": "#f8f5ff",
+                    "on-secondary-fixed": "#433700",
+                    "primary-container": "#809bff",
+                    "tertiary-dim": "#9a2100",
+                    "outline": "#72739e",
+                    "on-background": "#2a2b51",
+                    "tertiary-fixed": "#ff9479",
+                    "on-primary-fixed-variant": "#002376",
+                    "tertiary-fixed-dim": "#ff7d5c",
+                    "secondary-fixed-dim": "#edc600",
+                    "on-primary-container": "#001b61",
+                    "on-error": "#ffefef",
+                    "inverse-surface": "#08082f",
+                    "on-secondary-fixed-variant": "#645300",
+                    "on-tertiary-container": "#621200",
+                    "surface-tint": "#004be2",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#ff9479",
+                    "on-primary-fixed": "#000000",
+                    "secondary": "#6d5a00",
+                    "secondary-dim": "#5f4e00",
+                    "surface-container-highest": "#dbd9ff",
+                    "outline-variant": "#a9a9d7",
+                    "error-dim": "#a70138",
+                    "inverse-primary": "#6889ff",
+                    "surface-container-high": "#e1e0ff",
+                    "primary-fixed": "#809bff",
+                    "error-container": "#f74b6d",
+                    "surface": "#f8f5ff",
+                    "secondary-fixed": "#fdd400",
+                    "inverse-on-surface": "#9999c6",
+                    "primary-fixed-dim": "#6c8cff",
+                    "on-secondary": "#fff2ce",
+                    "on-secondary-container": "#594a00",
+                    "on-error-container": "#510017",
+                    "background": "#f8f5ff",
+                    "surface-dim": "#d1d0ff",
+                    "tertiary": "#af2700",
+                    "on-primary": "#f2f1ff",
+                    "surface-variant": "#dbd9ff",
+                    "primary-dim": "#0041c7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bubble-shadow {
+            box-shadow: 0px 8px 0px #002376;
+        }
+        .bubble-shadow:active {
+            box-shadow: 0px 2px 0px #002376;
+            transform: translateY(6px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- TopNavBar -->
+<header class="w-full top-0 z-50 bg-[#f8f5ff]/80 backdrop-blur-md dark:bg-slate-950/80 flex justify-between items-center px-8 py-6 fixed">
+<div class="text-2xl font-black text-[#2962FF] dark:text-blue-400 tracking-tighter font-plus-jakarta">
+<!-- Product name removed -->
+</div>
+<div class="flex items-center gap-6">
+<button class="text-[#575881] dark:text-slate-400 hover:opacity-80 transition-opacity scale-active-98 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="text-[#575881] dark:text-slate-400 hover:opacity-80 transition-opacity scale-active-98 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="vibrant colorful illustrated avatar of a smiling child with a soft friendly background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1-8xXu2ZbTKNN5K9hgC4lQ9NR0zBNrfrcZg9m4pP4e-iDLz3YYqvsdcOCH676B7xlZCJvF39-kQEuFcPmSvg4z7obOBuI08zztgPMgEoKpplnlJseDnCXzrsfV--FqAr7AhvQm_IQK-THR3omjpy0CoJnCE4iBrIPiNSKvVgTJ0ZO9FBlcqBrgUY3giC4JQ-mZ8jrr5hisxjfGkqQ7nxUqiD_jWxttEVd8iiRVkEq-1-LAY0BRTSR5MnYwwtPxUMF-elXnvudxTll"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-6 relative overflow-hidden">
+<!-- Floating decorative blobs for kinetic feel -->
+<div class="absolute top-[-10%] left-[-10%] w-64 h-64 bg-primary-container/20 rounded-full blur-3xl"></div>
+<div class="absolute bottom-[20%] right-[-5%] w-80 h-80 bg-secondary-container/10 rounded-full blur-3xl"></div>
+<!-- Hero Content Wrapper -->
+<div class="max-w-6xl w-full flex flex-col items-center justify-center relative z-10 pt-16 pb-24">
+<!-- Hero Title moved higher up -->
+<h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-on-surface font-headline leading-tight mb-12 md:mb-16">
+                How is your <span class="text-primary">mood</span> today?
+            </h1>
+<!-- Interaction Zone - Perfectly centered focal point -->
+<div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
+<!-- Character Illustration -->
+<div class="w-72 h-72 md:w-[400px] md:h-[400px] flex items-center justify-center">
+<img alt="Mood Bot Robot" class="w-full h-full object-contain drop-shadow-2xl hover:rotate-3 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/ADBb0uiiT8yjSSS3ZexSVayY5OrQGKn1FTIXDdwY86QsYyFzEcQOwJtzTdCYwKiMoPASi6eJnjhEh_u5VD7Ty7g0o6itdjRb9onFEFbU5Xwmcj4-9NvqcKp9UeUtgacEQNxTBwH9ul3t16zYPAFSwiLPhTgx8LCTiosTNNBDfYmP2S-zmv8LquZ-EQCibpJHfV6ZQz_rJGTJZ16GNpmpIn8ZPTB_9HLKxeeLDPVN8Gwe80YVywmffC4SNLlIoiQ"/>
+</div>
+<!-- Primary Action - Pill shaped button -->
+<div class="flex flex-col items-center">
+<button class="group relative bg-primary text-on-primary text-3xl md:text-5xl font-black px-14 py-8 rounded-full bubble-shadow transition-all duration-200 hover:scale-[1.05] flex items-center gap-4">
+<span aria-label="happy emoji" class="text-4xl md:text-6xl" role="img">😊</span>
+                        Happy!
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-center gap-12 items-center px-6 pb-8 pt-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-[0_-10px_40px_rgba(42,43,81,0.1)] rounded-t-[3rem] border-t-0">
+<!-- Item 1: Mood -->
+<a class="flex flex-col items-center justify-center bg-[#dbd9ff] dark:bg-blue-900/30 text-[#2962FF] rounded-full px-8 py-2 transition-all duration-300 active:translate-y-1" href="#">
+<span class="material-symbols-outlined" data-icon="mood" style="font-variation-settings: 'FILL' 1;">mood</span>
+<span class="font-plus-jakarta text-[12px] font-semibold">Mood</span>
+</a>
+<!-- Item 2: History -->
+<a class="flex flex-col items-center justify-center text-[#575881] px-8 py-2 hover:bg-[#f2efff] dark:hover:bg-slate-800 rounded-full transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="font-plus-jakarta text-[12px] font-semibold">History</span>
+</a>
+</nav>
+</body></html>

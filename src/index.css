@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-on-tertiary: #ffefec;
+  --color-secondary-container: #fdd400;
+  --color-on-surface: #2a2b51;
+  --color-on-surface-variant: #575881;
+  --color-surface-container-low: #f2efff;
+  --color-error: #b41340;
+  --color-surface-container: #e8e6ff;
+  --color-primary: #004be2;
+  --color-surface-bright: #f8f5ff;
+  --color-primary-container: #809bff;
+  --color-outline: #72739e;
+  --color-on-background: #2a2b51;
+  --color-tertiary-fixed: #ff9479;
+  --color-on-primary-container: #001b61;
+  --color-surface-container-lowest: #ffffff;
+  --color-tertiary-container: #ff9479;
+  --color-secondary: #6d5a00;
+  --color-surface-container-highest: #dbd9ff;
+  --color-outline-variant: #a9a9d7;
+  --color-surface-container-high: #e1e0ff;
+  --color-surface: #f8f5ff;
+  --color-secondary-fixed: #fdd400;
+  --color-on-secondary: #fff2ce;
+  --color-on-secondary-container: #594a00;
+  --color-background: #f8f5ff;
+  --color-surface-dim: #d1d0ff;
+  --color-tertiary: #af2700;
+  --color-on-primary: #f2f1ff;
+  --color-surface-variant: #dbd9ff;
+}
+
+@utility bubble-shadow {
+  box-shadow: 0px 8px 0px #002376;
+}
+
+@utility bubble-shadow-active {
+  box-shadow: 0px 2px 0px #002376;
+  transform: translateY(6px);
+}
+
+/* Custom micro-animations and utility classes for high-fidelity physical buttons */
+.tactile-button {
+  transform: translateY(0);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.tactile-button:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 0 #0033b3 !important;
+}
