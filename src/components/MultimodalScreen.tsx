@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
+import Lottie from 'lottie-react';
+import wavingRobotAnimation from '../../lotte files/waving robot.json';
 
 interface MultimodalScreenProps {
   onBack: () => void;
@@ -47,7 +49,7 @@ export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJu
             className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none"
             style={{ color: '#2a2b51' }}
           >
-            Re<span style={{ color: '#4343d5' }}>Pa</span>IR<span style={{ color: '#4343d5' }}>.</span>
+            RePaIR
           </button>
 
           <div className="hidden md:flex gap-8">
@@ -100,35 +102,12 @@ export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJu
                 animation: 'mascotFloat 3s ease-in-out infinite',
               }}
             >
-              {/* Robot SVG illustration */}
-              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-xl">
-                {/* Body */}
-                <rect x="50" y="90" width="100" height="80" rx="20" fill="#4343d5" />
-                {/* Head */}
-                <rect x="60" y="40" width="80" height="65" rx="18" fill="#5d5fef" />
-                {/* Eyes */}
-                <circle cx="82" cy="65" r="12" fill="#fdd400" />
-                <circle cx="118" cy="65" r="12" fill="#fdd400" />
-                <circle cx="85" cy="63" r="5" fill="#221b00" />
-                <circle cx="121" cy="63" r="5" fill="#221b00" />
-                {/* Mouth */}
-                <path d="M 82 85 Q 100 98 118 85" stroke="#fdd400" strokeWidth="4" fill="none" strokeLinecap="round" />
-                {/* Antenna */}
-                <line x1="100" y1="40" x2="100" y2="20" stroke="#c1c1ff" strokeWidth="4" strokeLinecap="round" />
-                <circle cx="100" cy="15" r="7" fill="#fdd400" stroke="#221b00" strokeWidth="2" />
-                {/* Arms */}
-                <rect x="15" y="95" width="35" height="18" rx="9" fill="#5d5fef" />
-                <rect x="150" y="95" width="35" height="18" rx="9" fill="#5d5fef" />
-                {/* Hands (pointing down gesture) */}
-                <circle cx="18" cy="104" r="10" fill="#c1c1ff" />
-                <circle cx="182" cy="104" r="10" fill="#c1c1ff" />
-                {/* Legs */}
-                <rect x="68" y="165" width="25" height="22" rx="8" fill="#2e2bc2" />
-                <rect x="107" y="165" width="25" height="22" rx="8" fill="#2e2bc2" />
-                {/* Chest badge */}
-                <rect x="82" y="110" width="36" height="25" rx="8" fill="#fdd400" />
-                <circle cx="100" cy="122" r="6" fill="#221b00" />
-              </svg>
+              <Lottie
+                animationData={wavingRobotAnimation}
+                loop
+                autoplay
+                className="w-full h-full drop-shadow-xl"
+              />
             </div>
           </div>
         </motion.header>
@@ -305,9 +284,6 @@ export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJu
           borderTop: '3px solid #dfe2ee',
         }}
       >
-        <div className="font-black text-xl" style={{ color: '#4343d5' }}>
-          RePaIR.
-        </div>
         <div className="flex flex-wrap justify-center gap-8">
           {['Privacy Policy', 'Safety Center', "Parents' Guide"].map((link) => (
             <a

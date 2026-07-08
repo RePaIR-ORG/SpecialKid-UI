@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
+import Lottie from 'lottie-react';
+import seeMeRobotAnimation from '../../lotte files/see me robot animated.json';
 
 interface CaptureScreenProps {
   onBack: () => void;
@@ -52,7 +54,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
             style={{ color: '#2a2b51', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>arrow_back</span>
-            Re<span style={{ color: '#4343d5' }}>Pa</span>IR<span style={{ color: '#4343d5' }}>.</span>
+            RePaIR
           </button>
 
           {/* Nav links (desktop) */}
@@ -113,45 +115,14 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
                 </span>
               </button>
 
-              {/* Robot with camera SVG */}
+              {/* See-me robot animation */}
               <div className="aspect-square w-full flex items-center justify-center">
-                <svg viewBox="0 0 220 230" xmlns="http://www.w3.org/2000/svg" className="w-full h-full max-h-96 drop-shadow-xl">
-                  {/* Body */}
-                  <rect x="50" y="105" width="120" height="95" rx="24" fill="#26dcdd" />
-                  {/* Head */}
-                  <rect x="62" y="38" width="96" height="78" rx="22" fill="#007f80" />
-                  {/* Eyes */}
-                  <circle cx="88" cy="68" r="14" fill="#ffffff" />
-                  <circle cx="132" cy="68" r="14" fill="#ffffff" />
-                  <circle cx="91" cy="66" r="6" fill="#002020" />
-                  <circle cx="135" cy="66" r="6" fill="#002020" />
-                  <circle cx="94" cy="64" r="2.5" fill="#56f9f9" />
-                  <circle cx="138" cy="64" r="2.5" fill="#56f9f9" />
-                  {/* Antenna */}
-                  <line x1="110" y1="38" x2="110" y2="16" stroke="#26dcdd" strokeWidth="4.5" strokeLinecap="round" />
-                  <circle cx="110" cy="10" r="8" fill="#fdd400" stroke="#221b00" strokeWidth="2.5" />
-                  {/* Mouth – happy */}
-                  <path d="M 88 90 Q 110 102 132 90" stroke="#fdd400" strokeWidth="4" fill="none" strokeLinecap="round" />
-                  {/* Left arm holding camera */}
-                  <rect x="5" y="112" width="45" height="20" rx="10" fill="#007f80" />
-                  {/* Camera body held by left hand */}
-                  <rect x="5" y="148" width="54" height="38" rx="10" fill="#2a2b51" />
-                  <circle cx="32" cy="167" r="12" fill="#171c24" stroke="#767586" strokeWidth="2.5" />
-                  <circle cx="32" cy="167" r="7" fill="#464555" />
-                  <circle cx="32" cy="167" r="3" fill="#c7c4d7" opacity="0.5" />
-                  <rect x="44" y="151" width="11" height="7" rx="3" fill="#fdd400" />
-                  {/* Right arm relaxed */}
-                  <rect x="170" y="112" width="45" height="20" rx="10" fill="#007f80" />
-                  <circle cx="212" cy="122" r="11" fill="#56f9f9" />
-                  {/* Legs */}
-                  <rect x="70" y="192" width="32" height="26" rx="10" fill="#004f50" />
-                  <rect x="118" y="192" width="32" height="26" rx="10" fill="#004f50" />
-                  {/* Chest panel */}
-                  <rect x="82" y="122" width="56" height="36" rx="12" fill="#004f50" />
-                  <rect x="90" y="130" width="40" height="5" rx="2.5" fill="#26dcdd" opacity="0.6" />
-                  <rect x="90" y="140" width="30" height="5" rx="2.5" fill="#26dcdd" opacity="0.4" />
-                  <rect x="90" y="150" width="20" height="5" rx="2.5" fill="#26dcdd" opacity="0.25" />
-                </svg>
+                <Lottie
+                  animationData={seeMeRobotAnimation}
+                  loop
+                  autoplay
+                  className="w-full h-full max-h-96 drop-shadow-xl"
+                />
               </div>
 
               {/* Decorative blur blob */}
@@ -178,7 +149,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
               }}
             >
-              Look Here!
+              Look at me right
             </h1>
 
             {/* Viewfinder */}
@@ -267,7 +238,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
             className="font-black text-xl"
             style={{ color: '#4343d5', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
-            RePaIR.
+            RePaIR
           </div>
           <div className="font-bold text-sm" style={{ color: '#464555', opacity: 0.7 }}>© 2026 RePaIR</div>
         </div>

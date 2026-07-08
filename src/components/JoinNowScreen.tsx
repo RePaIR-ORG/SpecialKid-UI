@@ -1,4 +1,6 @@
 import React from 'react';
+import Lottie from 'lottie-react';
+import wavingRobotAnimation from '../../lotte files/waving robot.json';
 
 interface JoinNowScreenProps {
   onBack: () => void;
@@ -7,6 +9,19 @@ interface JoinNowScreenProps {
 export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack }) => {
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col items-center justify-between overflow-x-hidden selection:bg-secondary-container font-sans">
+      <header className="w-full px-6 md:px-12 pt-6 flex items-start justify-between">
+        <div className="font-black text-2xl tracking-tighter text-[#2a2b51] select-none">
+          RePaIR
+        </div>
+        <button
+          onClick={onBack}
+          className="bg-white p-3 rounded-full shadow-lg border border-[#dbd9ff] hover:scale-110 transition-transform cursor-pointer"
+          aria-label="Go back"
+        >
+          <span className="material-symbols-outlined">arrow_back</span>
+        </button>
+      </header>
+
       <main className="w-full max-w-7xl px-6 flex-grow flex items-center justify-center relative py-8">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-container/20 blur-[100px] rounded-full -z-10"></div>
@@ -16,22 +31,9 @@ export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack }) => {
         <div className="w-full max-w-xl">
           {/* Main Card Container */}
           <div className="bg-surface-container-lowest p-8 md:p-16 rounded-[2.5rem] shadow-[0px_40px_60px_-10px_rgba(42,43,81,0.05)] relative overflow-visible border-2 border-[#dbd9ff]">
-            
-            {/* Back Button */}
-            <button 
-              onClick={onBack}
-              className="absolute -top-6 -left-6 bg-white p-3 rounded-full shadow-lg border border-[#dbd9ff] hover:scale-110 transition-transform cursor-pointer"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-
             {/* Editorial Image Accent */}
             <div className="absolute -top-16 -right-8 hidden md:block w-32 h-32 transform rotate-12">
-              <img 
-                alt="Friendly 3D robot toy waving" 
-                className="w-full h-full object-contain" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRzhshZlcVCu9lScviCAjr9qwLH9XkqGpkkiMLhmg32Y61GOctWIn2lu4v3WIBTopDL0PZBfJLf4AMv-9MXMtYu_foeesI5z-YdNDqOss08YhM3WoDprOwZ4OLP3zyBmfn5HRFSU3_HdXADxo1mHSL4hEe4d8FyTTR4qinCEq8DqIoaAwlEoglNq8ZJ0XL8A4vYeb9abfai_si5iW8DZAbildrmUj8WMmerN3Dud5ALrlAe4raLr_E7v0qIi2Jz4ujGORz-HIXjZCT"
-              />
+              <Lottie animationData={wavingRobotAnimation} loop autoplay className="w-full h-full object-contain" />
             </div>
 
             {/* Header Content */}
@@ -56,7 +58,7 @@ export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack }) => {
                     <input 
                       className="w-full bg-surface-container-high border-none focus:ring-4 focus:ring-primary rounded-full py-5 pl-16 pr-8 text-on-surface font-medium placeholder:text-outline transition-all transition-duration-300" 
                       id="username" 
-                      placeholder="Type a cool name..." 
+                      placeholder="Type your cool name" 
                       type="text"
                     />
                   </div>

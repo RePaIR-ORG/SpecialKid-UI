@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import Lottie from 'lottie-react';
 import { 
   Star, 
   ArrowRight, 
@@ -16,7 +17,7 @@ import {
   MessageCircle,
   X
 } from 'lucide-react';
-import robotImage from './assets/images/repair_robot_1783173638808.jpg';
+import wavingRobotAnimation from '../lotte files/waving robot.json';
 import MoodScreen from './components/MoodScreen';
 import JoinNowScreen from './components/JoinNowScreen';
 import HistoryScreen from './components/HistoryScreen';
@@ -82,40 +83,14 @@ export default function App() {
   return (
     <div className="bg-gradient-to-br from-[#fbfaff] via-[#f8f5ff] to-[#f4f0ff] text-[#2a2b51] min-h-screen flex flex-col font-sans overflow-x-hidden relative selection:bg-[#2962FF] selection:text-white">
       
-      {/* Background Decorative Sparkles (Bottom Left) */}
-      <div className="fixed bottom-12 left-12 hidden xl:block opacity-10 select-none pointer-events-none">
-        <motion.div
-          animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.05, 0.95, 1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Sparkles className="w-24 h-24 text-[#2a2b51]" />
-        </motion.div>
-      </div>
-
-      {/* Background Decorative Sprout (Top Right) */}
-      <div className="fixed top-32 right-24 hidden xl:block opacity-10 select-none pointer-events-none">
-        <motion.div
-          animate={{ rotate: [45, 55, 35, 45], y: [0, -5, 5, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Sprout className="w-20 h-20 text-[#645300]" />
-        </motion.div>
-      </div>
-
       {/* Top Header */}
       <header className="w-full z-40 bg-white/45 backdrop-blur-md border-b-2 border-[#f2efff]">
         <div className="flex justify-between items-center w-full px-8 py-5 max-w-7xl mx-auto">
           {/* Logo */}
-          <div className="flex items-center gap-2 select-none">
+          <div className="flex items-center gap-2 select-none -ml-2">
             <span className="font-black text-2xl tracking-tighter text-[#2a2b51]">
-              RePaIR<span className="text-[#2962FF]">.</span>
+              RePaIR
             </span>
-          </div>
-
-          {/* Minimal design label */}
-          <div className="hidden sm:flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#FDD400] animate-pulse"></span>
-            <span className="text-xs font-black uppercase tracking-widest text-[#575881]">Opening Page</span>
           </div>
         </div>
       </header>
@@ -134,7 +109,7 @@ export default function App() {
             {/* Subtle radial yellow glow behind the card on hover */}
             <div className="absolute inset-0 bg-[#fdd400]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]"></div>
             
-            {/* Embedded 3D Robot Image with relative bounce and wave animation option */}
+            {/* Embedded waving robot animation */}
             <motion.div
               className="w-full h-full relative z-10 rounded-[2rem] overflow-hidden"
               animate={isWaving ? {
@@ -152,18 +127,18 @@ export default function App() {
                 ease: "easeInOut"
               }}
             >
-              <img 
-                src={robotImage} 
-                alt="Waving 3D Robot Mascot" 
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover select-none pointer-events-none"
+              <Lottie
+                animationData={wavingRobotAnimation}
+                loop
+                autoplay
+                className="w-full h-full select-none pointer-events-none"
               />
             </motion.div>
           </motion.div>
         </div>
 
         {/* Right Side: Text & CTA Button Container */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
+        <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left">
           <div className="relative max-w-xl">
             
             {/* Decorative Yellow Star Accent Tilted */}
@@ -179,7 +154,7 @@ export default function App() {
 
             {/* Main Page Title */}
             <motion.h1 
-              className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-[#2a2b51] mb-8 leading-tight"
+              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter text-[#2a2b51] mb-8 leading-tight whitespace-nowrap"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -199,7 +174,7 @@ export default function App() {
                 onClick={() => {
                   setCurrentView('multimodal');
                 }}
-                className="tactile-button w-full bg-[#2962FF] hover:bg-[#1a52ef] text-white py-6 px-10 md:py-7 md:px-12 rounded-full font-black text-2xl md:text-3xl tracking-tight shadow-[0_8px_0_0_#0033b3] cursor-pointer"
+                  className="tactile-button w-full max-w-md mx-auto bg-[#2962FF] hover:bg-[#1a52ef] text-white py-6 px-10 md:py-7 md:px-12 rounded-full font-black text-2xl md:text-3xl tracking-tight shadow-[0_8px_0_0_#0033b3] cursor-pointer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

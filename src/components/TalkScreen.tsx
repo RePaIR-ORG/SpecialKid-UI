@@ -242,7 +242,7 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
         style={{ background: '#f0f3ff', borderTop: '3px solid #dfe2ee' }}
       >
         <div className="font-black text-xl" style={{ color: '#4343d5', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-          RePaIR.
+          RePaIR
         </div>
         <div className="flex flex-wrap justify-center gap-8">
           {['Privacy Policy', 'Safety Center', "Parents' Guide"].map((link) => (
@@ -256,7 +256,7 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
             </a>
           ))}
         </div>
-        <div className="font-bold text-sm opacity-60" style={{ color: '#705d00' }}>© 2026 RePaIR</div>
+          <div className="font-bold text-sm opacity-60" style={{ color: '#705d00' }}>© 2026 RePaIR</div>
       </footer>
 
       <style>{`

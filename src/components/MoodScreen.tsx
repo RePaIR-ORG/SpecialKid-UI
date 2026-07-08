@@ -33,7 +33,7 @@ const MOODS: MoodConfig[] = [
     id: 'happy',
     label: 'Happy!',
     emoji: '😊',
-    bg: '#f8f5ff',
+    bg: '#ffffff',
     blob1: 'rgba(128,155,255,0.18)',
     blob2: 'rgba(253,212,0,0.08)',
     btnBg: '#004be2',
@@ -46,7 +46,7 @@ const MOODS: MoodConfig[] = [
     id: 'sad',
     label: 'Sad',
     emoji: '😢',
-    bg: '#f8f5ff',
+    bg: '#ffffff',
     blob1: 'rgba(128,155,255,0.12)',
     blob2: 'rgba(209,208,255,0.25)',
     btnBg: '#dbd9ff',
@@ -60,7 +60,7 @@ const MOODS: MoodConfig[] = [
     id: 'angry',
     label: 'Angry',
     emoji: '😡',
-    bg: '#f8f5ff',
+    bg: '#FAF0E6',
     blob1: 'rgba(128,155,255,0.10)',
     blob2: 'rgba(253,212,0,0.05)',
     btnBg: '#004be2',
@@ -74,7 +74,7 @@ const MOODS: MoodConfig[] = [
     id: 'tired',
     label: 'Tired',
     emoji: '🥱',
-    bg: '#f8f5ff',
+    bg: '#ffffff',
     blob1: 'rgba(232,230,255,0.6)',
     blob2: 'rgba(128,155,255,0.08)',
     btnBg: '#dbd9ff',
@@ -90,28 +90,28 @@ const MOODS: MoodConfig[] = [
 /** Happy slide: uses the lottie animation already in the project */
 const HappyRobot: React.FC = () => (
   <div className="w-full h-full flex items-center justify-center">
-    <Lottie animationData={moodRobotAnimation} loop className="w-full h-full robot-cutout" />
+    <Lottie animationData={moodRobotAnimation} loop className="w-full h-full robot-cutout happy-robot-cutout" />
   </div>
 );
 
 /** Sad slide: uses the sad lottie from lotte files */
 const SadRobot: React.FC = () => (
   <div className="w-full h-full flex items-center justify-center">
-    <Lottie animationData={sadRobotAnimation} loop className="w-full h-full robot-cutout" />
+    <Lottie animationData={sadRobotAnimation} loop className="w-full h-full robot-cutout happy-robot-cutout" />
   </div>
 );
 
 /** Angry slide: uses the angry lottie from lotte files */
 const AngryRobot: React.FC = () => (
   <div className="w-full h-full flex items-center justify-center">
-    <Lottie animationData={angryRobotAnimation} loop className="w-full h-full robot-cutout" />
+    <Lottie animationData={angryRobotAnimation} loop className="w-full h-full robot-cutout happy-robot-cutout" />
   </div>
 );
 
 /** Tired slide: uses the tired lottie from lotte files */
 const TiredRobot: React.FC = () => (
   <div className="w-full h-full flex items-center justify-center">
-    <Lottie animationData={tiredRobotAnimation} loop className="w-full h-full robot-cutout" />
+    <Lottie animationData={tiredRobotAnimation} loop className="w-full h-full robot-cutout happy-robot-cutout" />
   </div>
 );
 
@@ -150,7 +150,7 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
   return (
     <div
       className="min-h-screen flex flex-col overflow-hidden font-sans"
-      style={{ background: mood.bg, transition: 'background 0.4s ease', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+        style={{ background: mood.bg, transition: 'background 0.4s ease', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       {/* ── Top Nav ─────────────────────────────────────────────────────────── */}
       <header
@@ -159,7 +159,7 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
       >
         <div className="flex items-center gap-2 cursor-pointer select-none" onClick={onBack}>
           <span className="font-black text-2xl tracking-tighter" style={{ color: '#2a2b51' }}>
-            RePaIR<span style={{ color: '#2962FF' }}>.</span>
+            RePaIR
           </span>
         </div>
         <div className="flex items-center gap-5">
@@ -249,10 +249,12 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
                 style={{ width: 'clamp(220px, 35vw, 380px)', height: 'clamp(220px, 35vw, 380px)' }}
               >
                 {/* Mood-specific ambient glow */}
-                <div
-                  className="absolute -inset-6 rounded-full blur-3xl opacity-40 pointer-events-none group-hover:opacity-60 transition-opacity duration-700"
-                  style={{ background: mood.blob1 }}
-                />
+                {mood.id === 'happy' && (
+                  <div
+                    className="absolute -inset-6 rounded-full blur-3xl opacity-40 pointer-events-none group-hover:opacity-60 transition-opacity duration-700"
+                    style={{ background: mood.blob1 }}
+                  />
+                )}
                 <div className="relative w-full h-full z-10">
                   <RobotEl />
                 </div>
@@ -355,6 +357,22 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
           background: transparent !important;
           mix-blend-mode: multiply;
           isolation: isolate;
+        }
+
+        .happy-robot-cutout {
+          background: transparent !important;
+          mix-blend-mode: normal !important;
+          filter: none !important;
+          box-shadow: none !important;
+          border: 0 !important;
+        }
+
+        .happy-robot-cutout svg,
+        .happy-robot-cutout > svg {
+          background: transparent !important;
+          filter: none !important;
+          box-shadow: none !important;
+          border: 0 !important;
         }
 
         @keyframes tiredSway {
