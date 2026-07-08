@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import { ArrowLeft } from 'lucide-react';
 
 interface TalkScreenProps {
   onBack: () => void;
+  onOpenLink: (link: 'help' | 'exit' | 'privacy-policy' | 'safety-center' | 'parents-guide') => void;
 }
 
-export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
+export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) => {
   const [isListening, setIsListening] = useState(true);
 
   const toggleListening = () => setIsListening((prev) => !prev);
@@ -14,7 +16,7 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
     <div
       className="min-h-screen flex flex-col font-sans overflow-x-hidden"
       style={{
-        background: 'linear-gradient(135deg, #f0f3ff 0%, #eaedf9 100%)',
+        background: '#ffffff',
         fontFamily: "'Atkinson Hyperlegible Next', sans-serif",
       }}
     >
@@ -22,37 +24,59 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
       <header
         className="flex justify-center items-center w-full px-6 py-4 fixed top-0 z-50"
         style={{
-          background: 'rgba(249,249,255,0.92)',
+          background: '#f8f5ff',
           backdropFilter: 'blur(12px)',
           borderBottom: '3px solid #dfe2ee',
         }}
       >
         <div className="flex justify-between items-center w-full max-w-7xl">
-          <button
-            onClick={onBack}
-            className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none flex items-center gap-2"
-            style={{ color: '#2a2b51', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>arrow_back</span>
-            Re<span style={{ color: '#4343d5' }}>Pa</span>IR<span style={{ color: '#4343d5' }}>.</span>
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onBack}
+              className="w-11 h-11 rounded-full flex items-center justify-center bg-white border border-[#dbd9ff] text-[#2a2b51] hover:scale-105 transition-transform cursor-pointer"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={onBack}
+              className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none flex items-center gap-2"
+              style={{ color: '#2a2b51', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            >
+              RePaIR
+            </button>
+          </div>
           <div className="flex gap-8 items-center">
-            <a
-              href="#"
+            <button
+              type="button"
+              onClick={() => onOpenLink('help')}
               className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1"
               style={{ color: '#464555' }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>help_outline</span>
               Help
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              type="button"
+              onClick={() => onOpenLink('exit')}
               className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1"
               style={{ color: '#464555' }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>logout</span>
               Exit
-            </a>
+            </button>
+            <button type="button" onClick={() => onOpenLink('privacy-policy')} className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1" style={{ color: '#464555' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>privacy_tip</span>
+              Privacy Policy
+            </button>
+            <button type="button" onClick={() => onOpenLink('safety-center')} className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1" style={{ color: '#464555' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>shield</span>
+              Safety Center
+            </button>
+            <button type="button" onClick={() => onOpenLink('parents-guide')} className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1" style={{ color: '#464555' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>family_restroom</span>
+              Parents' Guide
+            </button>
           </div>
         </div>
       </header>
@@ -112,18 +136,6 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
                   <path d="M 78 95 Q 100 107 122 95" stroke="#fdd400" strokeWidth="3.5" fill="none" strokeLinecap="round" />
                 </svg>
               </div>
-              {/* Volume badge */}
-              <div
-                className="absolute -top-3 -right-3 p-3 rounded-full border-4"
-                style={{ background: '#fdd400', borderColor: '#221b00' }}
-              >
-                <span
-                  className="material-symbols-outlined"
-                  style={{ fontSize: '28px', color: '#221b00', fontVariationSettings: "'FILL' 1" }}
-                >
-                  volume_up
-                </span>
-              </div>
             </div>
           </motion.div>
 
@@ -135,10 +147,10 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
             transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
           >
             <h1
-              className="font-black tracking-tight text-center"
+              className="font-black tracking-tight text-center whitespace-nowrap"
               style={{
                 color: '#171c24',
-                fontSize: 'clamp(28px, 4vw, 42px)',
+                fontSize: 'clamp(22px, 3.2vw, 38px)',
                 lineHeight: 1.2,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
               }}
@@ -239,24 +251,14 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack }) => {
       {/* Footer */}
       <footer
         className="flex flex-col md:flex-row justify-between items-center w-full px-6 py-8 gap-4"
-        style={{ background: '#f0f3ff', borderTop: '3px solid #dfe2ee' }}
+        style={{ background: '#f8f5ff', borderTop: '3px solid #dfe2ee' }}
       >
-        <div className="font-black text-xl" style={{ color: '#4343d5', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-          RePaIR
-        </div>
         <div className="flex flex-wrap justify-center gap-8">
-          {['Privacy Policy', 'Safety Center', "Parents' Guide"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="font-bold text-base hover:opacity-70 transition-all active:scale-95"
-              style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
-            >
-              {link}
-            </a>
-          ))}
+          <button type="button" onClick={() => onOpenLink('privacy-policy')} className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}>Privacy Policy</button>
+          <button type="button" onClick={() => onOpenLink('safety-center')} className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}>Safety Center</button>
+          <button type="button" onClick={() => onOpenLink('parents-guide')} className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}>Parents' Guide</button>
         </div>
-          <div className="font-bold text-sm opacity-60" style={{ color: '#705d00' }}>© 2026 RePaIR</div>
+        <div className="font-bold text-sm opacity-60" style={{ color: '#705d00' }}>© 2026 RePaIR</div>
       </footer>
 
       <style>{`

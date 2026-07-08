@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import Lottie from 'lottie-react';
+import { ArrowLeft } from 'lucide-react';
 import seeMeRobotAnimation from '../../lotte files/see me robot animated.json';
 
 interface CaptureScreenProps {
   onBack: () => void;
+  onOpenLink: (link: 'help' | 'exit' | 'privacy-policy' | 'safety-center' | 'parents-guide') => void;
 }
 
 const STATUS_MESSAGES = [
@@ -14,7 +16,7 @@ const STATUS_MESSAGES = [
   'You look wonderful!',
 ];
 
-export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
+export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack, onOpenLink }) => {
   const [statusIndex, setStatusIndex] = useState(0);
   const [statusVisible, setStatusVisible] = useState(true);
 
@@ -34,7 +36,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
     <div
       className="min-h-screen flex flex-col font-sans overflow-x-hidden"
       style={{
-        background: '#F0F0FF',
+        background: '#ffffff',
         fontFamily: "'Atkinson Hyperlegible Next', sans-serif",
       }}
     >
@@ -42,26 +44,36 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
       <header
         className="flex justify-center items-center w-full px-6 py-3 sticky top-0 z-50"
         style={{
-          background: '#f9f9ff',
+          background: '#f8f5ff',
           borderBottom: '4px solid #dfe2ee',
         }}
       >
         <div className="flex justify-between items-center w-full max-w-7xl">
           {/* Logo / back */}
-          <button
-            onClick={onBack}
-            className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none flex items-center gap-2"
-            style={{ color: '#2a2b51', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>arrow_back</span>
-            RePaIR
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onBack}
+              className="w-11 h-11 rounded-full flex items-center justify-center bg-white border border-[#dbd9ff] text-[#2a2b51] hover:scale-105 transition-transform cursor-pointer"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={onBack}
+              className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none flex items-center gap-2"
+              style={{ color: '#2a2b51', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            >
+              RePaIR
+            </button>
+          </div>
 
           {/* Nav links (desktop) */}
           <nav className="hidden md:flex gap-8 items-center">
-            <a href="#" className="font-bold text-base" style={{ color: '#4343d5' }}>Activities</a>
-            <a href="#" className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Progress</a>
-            <a href="#" className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Support</a>
+            <button type="button" onClick={() => onOpenLink('help')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Help</button>
+            <button type="button" onClick={() => onOpenLink('exit')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Exit</button>
+            <button type="button" onClick={() => onOpenLink('privacy-policy')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Privacy Policy</button>
+            <button type="button" onClick={() => onOpenLink('safety-center')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Safety Center</button>
+            <button type="button" onClick={() => onOpenLink('parents-guide')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Parents' Guide</button>
           </nav>
 
           {/* Avatar button */}
@@ -98,23 +110,6 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
                 boxShadow: '0 12px 40px rgba(86,249,249,0.12)',
               }}
             >
-              {/* Audio / volume badge button */}
-              <button
-                className="absolute top-4 right-4 z-10 w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-                style={{
-                  background: '#fdd400',
-                  color: '#221b00',
-                  borderBottom: '4px solid #e9c400',
-                }}
-              >
-                <span
-                  className="material-symbols-outlined"
-                  style={{ fontSize: '26px', fontVariationSettings: "'FILL' 1" }}
-                >
-                  volume_up
-                </span>
-              </button>
-
               {/* See-me robot animation */}
               <div className="aspect-square w-full flex items-center justify-center">
                 <Lottie
@@ -149,7 +144,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack }) => {
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
               }}
             >
-              Look at me right
+              Look at me!
             </h1>
 
             {/* Viewfinder */}
