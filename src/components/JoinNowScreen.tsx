@@ -1,25 +1,29 @@
 import React from 'react';
 import Lottie from 'lottie-react';
+import { ArrowLeft } from 'lucide-react';
 import wavingRobotAnimation from '../../lotte files/waving robot.json';
 
 interface JoinNowScreenProps {
   onBack: () => void;
+  onOpenLink: (link: 'privacy-policy' | 'terms' | 'support') => void;
 }
 
-export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack }) => {
+export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack, onOpenLink }) => {
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col items-center justify-between overflow-x-hidden selection:bg-secondary-container font-sans">
       <header className="w-full px-6 md:px-12 pt-6 flex items-start justify-between">
-        <div className="font-black text-2xl tracking-tighter text-[#2a2b51] select-none">
-          RePaIR
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBack}
+            className="w-11 h-11 rounded-full flex items-center justify-center bg-white border border-[#dbd9ff] text-[#2a2b51] hover:scale-105 transition-transform cursor-pointer"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div className="font-black text-2xl tracking-tighter text-[#2a2b51] select-none">
+            RePaIR
+          </div>
         </div>
-        <button
-          onClick={onBack}
-          className="bg-white p-3 rounded-full shadow-lg border border-[#dbd9ff] hover:scale-110 transition-transform cursor-pointer"
-          aria-label="Go back"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
       </header>
 
       <main className="w-full max-w-7xl px-6 flex-grow flex items-center justify-center relative py-8">
@@ -108,9 +112,9 @@ export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack }) => {
       <footer className="w-full bg-transparent flex flex-col md:flex-row justify-between items-center px-12 py-8 w-full gap-4">
         <div className="text-[#575881] font-sans text-sm font-medium">© 2026 Secured</div>
         <div className="flex gap-8">
-          <a className="text-[#575881] font-sans text-sm font-medium hover:text-primary transition-all opacity-80 hover:opacity-100" href="#">Privacy</a>
-          <a className="text-[#575881] font-sans text-sm font-medium hover:text-primary transition-all opacity-80 hover:opacity-100" href="#">Terms</a>
-          <a className="text-[#575881] font-sans text-sm font-medium hover:text-primary transition-all opacity-80 hover:opacity-100" href="#">Support</a>
+          <button type="button" className="text-[#575881] font-sans text-sm font-medium hover:text-primary transition-all opacity-80 hover:opacity-100" onClick={() => onOpenLink('privacy-policy')}>Privacy</button>
+          <button type="button" className="text-[#575881] font-sans text-sm font-medium hover:text-primary transition-all opacity-80 hover:opacity-100" onClick={() => onOpenLink('terms')}>Terms</button>
+          <button type="button" className="text-[#575881] font-sans text-sm font-medium hover:text-primary transition-all opacity-80 hover:opacity-100" onClick={() => onOpenLink('support')}>Support</button>
         </div>
       </footer>
     </div>

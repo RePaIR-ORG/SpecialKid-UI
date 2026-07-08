@@ -1,5 +1,6 @@
 import React from 'react';
 import Lottie from 'lottie-react';
+import { ArrowLeft } from 'lucide-react';
 import moodRobotAnimation from '../assets/lottie/happy-robot.json';
 
 interface HistoryScreenProps {
@@ -8,17 +9,18 @@ interface HistoryScreenProps {
 
 export const HistoryScreen: React.FC<HistoryScreenProps> = ({ onBackToMood }) => {
   return (
-    <div className="bg-surface text-on-surface min-h-screen flex flex-col relative font-sans">
+    <div className="bg-white text-on-surface min-h-screen flex flex-col relative font-sans">
       {/* TopAppBar */}
       <nav className="flex justify-between items-center px-6 py-4 w-full bg-[#f8f5ff] sticky top-0 z-50">
-        <div className="text-2xl font-black text-[#2962FF] tracking-tighter">History</div>
-        <div className="flex gap-4 items-center">
-            <button 
-                onClick={onBackToMood}
-                className="text-[#575881] hover:text-[#2962FF] transition-colors cursor-pointer"
-            >
-                <span className="material-symbols-outlined">close</span>
-            </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBackToMood}
+            className="w-11 h-11 rounded-full flex items-center justify-center bg-white border border-[#dbd9ff] text-[#2a2b51] hover:scale-105 transition-transform cursor-pointer"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div className="text-2xl font-black text-[#2a2b51] tracking-tighter">RePaIR</div>
         </div>
       </nav>
 
@@ -44,9 +46,9 @@ export const HistoryScreen: React.FC<HistoryScreenProps> = ({ onBackToMood }) =>
               </div>
               {/* Vibe Button */}
               <div className="md:-ml-12 relative z-10">
-                <span className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white text-2xl md:text-4xl font-black rounded-full shadow-lg transform hover:scale-110 transition-transform cursor-default">
+                <div className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#2a2b51] text-2xl md:text-4xl font-black rounded-3xl border-2 border-[#dbd9ff] cursor-default">
                   Happy! 😊
-                </span>
+                </div>
               </div>
             </div>
           </div>
@@ -103,21 +105,22 @@ export const HistoryScreen: React.FC<HistoryScreenProps> = ({ onBackToMood }) =>
       </main>
 
       {/* BottomNavBar */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-center items-center px-4 pb-6 pt-2 bg-white/80 backdrop-blur-xl shadow-[0px_-4px_0px_0px_rgba(42,43,81,0.1)] rounded-t-[3rem] border-t-4 border-primary">
+      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-center items-center px-4 pb-6 pt-2 bg-[#f8f5ff] backdrop-blur-xl shadow-[0px_-4px_0px_0px_rgba(42,43,81,0.1)] rounded-t-[3rem] border-t-4 border-primary">
         <div className="flex justify-around items-center w-full max-w-sm">
           {/* Mood */}
           <button 
             onClick={onBackToMood}
-            className="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all cursor-pointer"
+            className="flex flex-col items-center justify-center rounded-full px-8 py-2 transition-all duration-300 active:translate-y-0.5 cursor-pointer hover:bg-[#f2efff]"
+            style={{ color: '#575881' }}
           >
             <span className="material-symbols-outlined text-3xl">mood</span>
-            <span className="font-bold text-[10px] uppercase tracking-widest mt-1">Mood</span>
+            <span className="text-[12px] font-semibold">Mood</span>
           </button>
           {/* History (Active) */}
-          <div className="flex flex-col items-center justify-center bg-primary text-white rounded-full p-4 shadow-[0px_4px_0px_#004be2] translate-y-[-12px] transition-transform">
-            <span className="material-symbols-outlined text-3xl">history</span>
-            <span className="font-bold text-[10px] uppercase tracking-widest mt-1">History</span>
-          </div>
+          <button type="button" className="flex flex-col items-center justify-center rounded-full px-8 py-2 transition-all duration-300 cursor-pointer" style={{ background: '#dbd9ff', color: '#2962FF' }}>
+            <span className="material-symbols-outlined text-3xl">calendar_month</span>
+            <span className="text-[12px] font-semibold">History</span>
+          </button>
         </div>
       </nav>
     </div>

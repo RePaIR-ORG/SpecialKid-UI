@@ -25,6 +25,27 @@ import MultimodalScreen from './components/MultimodalScreen';
 import TalkScreen from './components/TalkScreen';
 import CaptureScreen from './components/CaptureScreen';
 
+type InfoLink =
+  | 'privacy-policy'
+  | 'safety-center'
+  | 'terms'
+  | 'support'
+  | 'parents-guide'
+  | 'help'
+  | 'settings'
+  | 'profile';
+
+const INFO_MESSAGES: Record<InfoLink, string> = {
+  'privacy-policy': 'Privacy Policy: RePaIR uses your taps and mood choices to personalize the experience inside the app. It is designed to stay simple and child-friendly.',
+  'safety-center': 'Safety Center: Use RePaIR with a trusted adult nearby. If something feels wrong or confusing, tap Exit and ask for help.',
+  terms: 'Terms: RePaIR is meant for respectful, supervised use. Please follow your school or family guidance while using the app.',
+  support: 'Support: Ask a teacher, parent, caregiver, or school helper if you need assistance using RePaIR.',
+  'parents-guide': 'Parents\' Guide: This app helps children notice feelings, choose support options, and move through the experience with simple navigation.',
+  help: 'Help: Use the top links to learn more. Exit returns you to the opening screen, and the mood cards let you move through the experience.',
+  settings: 'Settings: This area would normally control accessibility, sound, and comfort preferences.',
+  profile: 'Student Profile: This area would normally show the student identity and saved preferences.',
+};
+
 export default function App() {
   const [currentView, setCurrentView] = useState<'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'join-now' | 'history'>('landing');
   const [showMoodCheck, setShowMoodCheck] = useState(false);
@@ -35,6 +56,10 @@ export default function App() {
     setSelectedMood(mood);
     setIsWaving(true);
     setTimeout(() => setIsWaving(false), 2000);
+  };
+
+  const openInfoLink = (link: InfoLink) => {
+    window.alert(INFO_MESSAGES[link]);
   };
 
   const moods = [
@@ -51,16 +76,35 @@ export default function App() {
         onJustTap={() => setCurrentView('mood')}
         onTalkToMe={() => setCurrentView('talk')}
         onSeeMe={() => setCurrentView('capture')}
+        onOpenLink={(link) => {
+          if (link === 'exit') {
+            setCurrentView('landing');
+            return;
+          }
+          openInfoLink(link as InfoLink);
+        }}
       />
     );
   }
 
   if (currentView === 'talk') {
-    return <TalkScreen onBack={() => setCurrentView('multimodal')} />;
+    return <TalkScreen onBack={() => setCurrentView('multimodal')} onOpenLink={(link) => {
+      if (link === 'exit') {
+        setCurrentView('landing');
+        return;
+      }
+      openInfoLink(link as InfoLink);
+    }} />;
   }
 
   if (currentView === 'capture') {
-    return <CaptureScreen onBack={() => setCurrentView('multimodal')} />;
+    return <CaptureScreen onBack={() => setCurrentView('multimodal')} onOpenLink={(link) => {
+      if (link === 'exit') {
+        setCurrentView('landing');
+        return;
+      }
+      openInfoLink(link as InfoLink);
+    }} />;
   }
 
   if (currentView === 'mood') {
@@ -68,6 +112,7 @@ export default function App() {
       <MoodScreen 
         onBack={() => setCurrentView('multimodal')} 
         onShowHistory={() => setCurrentView('history')}
+        onOpenLink={(link) => openInfoLink(link as InfoLink)}
       />
     );
   }
@@ -77,7 +122,7 @@ export default function App() {
   }
 
   if (currentView === 'join-now') {
-    return <JoinNowScreen onBack={() => setCurrentView('landing')} />;
+    return <JoinNowScreen onBack={() => setCurrentView('landing')} onOpenLink={(link) => openInfoLink(link as InfoLink)} />;
   }
 
   return (
@@ -273,9 +318,9 @@ export default function App() {
           <div className="flex flex-wrap justify-center items-center gap-4 text-[#575881] font-black text-xs uppercase tracking-widest">
             <span>© 2026</span>
             <span className="text-[#dbd9ff]">|</span>
-            <a className="hover:text-[#2962FF] transition-colors cursor-pointer" href="#">Privacy Policy</a>
+              <button type="button" className="hover:text-[#2962FF] transition-colors cursor-pointer" onClick={() => openInfoLink('privacy-policy')}>Privacy Policy</button>
             <span className="text-[#dbd9ff]">|</span>
-            <a className="hover:text-[#2962FF] transition-colors cursor-pointer" href="#">Safety Center</a>
+              <button type="button" className="hover:text-[#2962FF] transition-colors cursor-pointer" onClick={() => openInfoLink('safety-center')}>Safety Center</button>
           </div>
         </div>
       </footer>

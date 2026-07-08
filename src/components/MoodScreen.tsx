@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Lottie from 'lottie-react';
+import { ArrowLeft } from 'lucide-react';
 import moodRobotAnimation from '../assets/lottie/happy-robot.json';
 import sadRobotAnimation from '../../lotte files/sad robot lotte.json';
 import angryRobotAnimation from '../../lotte files/angry robot lotte.json';
@@ -9,6 +10,7 @@ import tiredRobotAnimation from '../../lotte files/tired robot lotte.json';
 interface MoodScreenProps {
   onBack: () => void;
   onShowHistory: () => void;
+  onOpenLink: (link: 'settings' | 'help' | 'profile') => void;
 }
 
 // ─── Mood data ────────────────────────────────────────────────────────────────
@@ -47,20 +49,20 @@ const MOODS: MoodConfig[] = [
     label: 'Sad',
     emoji: '😢',
     bg: '#ffffff',
-    blob1: 'rgba(128,155,255,0.12)',
-    blob2: 'rgba(209,208,255,0.25)',
-    btnBg: '#dbd9ff',
+    blob1: 'rgba(128,155,255,0.10)',
+    blob2: 'rgba(191,220,255,0.24)',
+    btnBg: '#d9ebff',
     btnText: '#2a2b51',
-    btnShadow: '#0041c7',
+    btnShadow: '#7aa8ff',
     btnBorder: 'transparent',
-    btnBorderBottom: '8px solid #0041c7',
+    btnBorderBottom: '8px solid #7aa8ff',
     accentText: '#004be2',
   },
   {
     id: 'angry',
     label: 'Angry',
     emoji: '😡',
-    bg: '#FAF0E6',
+    bg: '#ffffff',
     blob1: 'rgba(128,155,255,0.10)',
     blob2: 'rgba(253,212,0,0.05)',
     btnBg: '#004be2',
@@ -75,12 +77,12 @@ const MOODS: MoodConfig[] = [
     label: 'Tired',
     emoji: '🥱',
     bg: '#ffffff',
-    blob1: 'rgba(232,230,255,0.6)',
+    blob1: 'rgba(214,233,255,0.48)',
     blob2: 'rgba(128,155,255,0.08)',
-    btnBg: '#dbd9ff',
+    btnBg: '#d1e6ff',
     btnText: '#2a2b51',
-    btnShadow: '#809bff',
-    btnBorder: '#809bff',
+    btnShadow: '#8eb4ff',
+    btnBorder: '#8eb4ff',
     accentText: '#004be2',
   },
 ] as const;
@@ -125,7 +127,7 @@ const variants = {
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory }) => {
+export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory, onOpenLink }) => {
   const [[activeIndex, direction], setPage] = useState<[number, number]>([0, 0]);
   const dragStartX = useRef<number>(0);
 
@@ -150,32 +152,39 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
   return (
     <div
       className="min-h-screen flex flex-col overflow-hidden font-sans"
-        style={{ background: mood.bg, transition: 'background 0.4s ease', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      style={{ background: mood.bg, transition: 'background 0.4s ease', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       {/* ── Top Nav ─────────────────────────────────────────────────────────── */}
       <header
         className="w-full fixed top-0 z-50 flex justify-between items-center px-8 py-5"
-        style={{ background: 'rgba(248,245,255,0.85)', backdropFilter: 'blur(12px)' }}
+        style={{ background: '#f8f5ff', backdropFilter: 'blur(12px)' }}
       >
-        <div className="flex items-center gap-2 cursor-pointer select-none" onClick={onBack}>
+        <div className="flex items-center gap-3 select-none">
+          <button
+            onClick={onBack}
+            className="w-11 h-11 rounded-full flex items-center justify-center bg-white border border-[#dbd9ff] text-[#2a2b51] hover:scale-105 transition-transform cursor-pointer"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
           <span className="font-black text-2xl tracking-tighter" style={{ color: '#2a2b51' }}>
             RePaIR
           </span>
         </div>
         <div className="flex items-center gap-5">
-          <button className="hover:opacity-70 transition-opacity active:scale-95 cursor-pointer" style={{ color: '#575881' }}>
+          <button onClick={() => onOpenLink('settings')} className="hover:opacity-70 transition-opacity active:scale-95 cursor-pointer" style={{ color: '#575881' }} aria-label="Settings">
             <span className="material-symbols-outlined">settings</span>
           </button>
-          <button className="hover:opacity-70 transition-opacity active:scale-95 cursor-pointer" style={{ color: '#575881' }}>
+          <button onClick={() => onOpenLink('help')} className="hover:opacity-70 transition-opacity active:scale-95 cursor-pointer" style={{ color: '#575881' }} aria-label="Help">
             <span className="material-symbols-outlined">help</span>
           </button>
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2" style={{ borderColor: '#dbd9ff' }}>
+          <button onClick={() => onOpenLink('profile')} className="w-10 h-10 rounded-full overflow-hidden border-2 cursor-pointer" style={{ borderColor: '#dbd9ff' }} aria-label="Student profile">
             <img
               alt="User Profile Avatar"
               className="w-full h-full object-cover"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1-8xXu2ZbTKNN5K9hgC4lQ9NR0zBNrfrcZg9m4pP4e-iDLz3YYqvsdcOCH676B7xlZCJvF39-kQEuFcPmSvg4z7obOBuI08zztgPMgEoKpplnlJseDnCXzrsfV--FqAr7AhvQm_IQK-THR3omjpy0CoJnCE4iBrIPiNSKvVgTJ0ZO9FBlcqBrgUY3giC4JQ-mZ8jrr5hisxjfGkqQ7nxUqiD_jWxttEVd8iiRVkEq-1-LAY0BRTSR5MnYwwtPxUMF-elXnvudxTll"
             />
-          </div>
+          </button>
         </div>
       </header>
 
@@ -326,7 +335,7 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
       <nav
         className="fixed bottom-0 left-0 w-full z-50 flex justify-center gap-12 items-center px-6 pb-8 pt-4 rounded-t-[3rem] border-t"
         style={{
-          background: 'rgba(255,255,255,0.85)',
+          background: '#f8f5ff',
           backdropFilter: 'blur(16px)',
           boxShadow: '0 -10px 40px rgba(42,43,81,0.08)',
           borderColor: 'rgba(219,217,255,0.6)',
@@ -341,15 +350,15 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory })
           <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>mood</span>
           <span className="text-[12px] font-semibold">Mood</span>
         </a>
-        <a
-          href="#"
-          className="flex flex-col items-center justify-center px-8 py-2 rounded-full transition-all duration-300 active:translate-y-0.5 cursor-pointer hover:bg-[#f2efff]"
-          style={{ color: '#575881' }}
-          onClick={(e) => { e.preventDefault(); onShowHistory(); }}
+        <button
+          type="button"
+          className="flex flex-col items-center justify-center rounded-full px-8 py-2 transition-all duration-300 cursor-pointer"
+          style={{ background: '#dbd9ff', color: '#2962FF' }}
+          onClick={onShowHistory}
         >
           <span className="material-symbols-outlined">calendar_month</span>
           <span className="text-[12px] font-semibold">History</span>
-        </a>
+        </button>
       </nav>
 
       <style>{`

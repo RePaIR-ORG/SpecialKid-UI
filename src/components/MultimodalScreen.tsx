@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import Lottie from 'lottie-react';
+import { ArrowLeft } from 'lucide-react';
 import wavingRobotAnimation from '../../lotte files/waving robot.json';
 
 interface MultimodalScreenProps {
@@ -8,9 +9,10 @@ interface MultimodalScreenProps {
   onJustTap: () => void;
   onTalkToMe: () => void;
   onSeeMe: () => void;
+  onOpenLink: (link: 'privacy-policy' | 'safety-center' | 'parents-guide' | 'help' | 'exit') => void;
 }
 
-export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJustTap, onTalkToMe, onSeeMe }) => {
+export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJustTap, onTalkToMe, onSeeMe, onOpenLink }) => {
   const mascotRef = useRef<HTMLDivElement>(null);
 
   // Mouse-tracking tilt effect for the mascot robot
@@ -29,7 +31,7 @@ export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJu
     <div
       className="min-h-screen flex flex-col font-sans overflow-x-hidden"
       style={{
-        background: 'linear-gradient(135deg, #f0f3ff 0%, #e1e0ff 100%)',
+        background: '#ffffff',
         fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}
     >
@@ -37,36 +39,47 @@ export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJu
       <nav
         className="flex justify-center items-center w-full px-6 py-4 fixed top-0 z-50"
         style={{
-          background: 'rgba(249,249,255,0.85)',
+          background: '#f8f5ff',
           backdropFilter: 'blur(12px)',
           borderBottom: '3px solid #dfe2ee',
         }}
       >
         <div className="flex justify-between items-center w-full max-w-7xl">
           {/* Logo / back */}
-          <button
-            onClick={onBack}
-            className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none"
-            style={{ color: '#2a2b51' }}
-          >
-            RePaIR
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onBack}
+              className="w-11 h-11 rounded-full flex items-center justify-center bg-white border border-[#dbd9ff] text-[#2a2b51] hover:scale-105 transition-transform cursor-pointer"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={onBack}
+              className="font-black text-2xl tracking-tighter cursor-pointer bg-transparent border-none"
+              style={{ color: '#2a2b51' }}
+            >
+              RePaIR
+            </button>
+          </div>
 
           <div className="hidden md:flex gap-8">
-            <a
-              href="#"
+            <button
+              type="button"
+              onClick={() => onOpenLink('help')}
               className="font-bold text-base hover:opacity-70 transition-opacity"
               style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
             >
               Help
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              type="button"
+              onClick={() => onOpenLink('exit')}
               className="font-bold text-base hover:opacity-70 transition-opacity"
               style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
             >
               Exit
-            </a>
+            </button>
           </div>
         </div>
       </nav>
@@ -285,16 +298,9 @@ export const MultimodalScreen: React.FC<MultimodalScreenProps> = ({ onBack, onJu
         }}
       >
         <div className="flex flex-wrap justify-center gap-8">
-          {['Privacy Policy', 'Safety Center', "Parents' Guide"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              className="font-bold text-base hover:opacity-70 transition-all active:scale-95"
-              style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
-            >
-              {link}
-            </a>
-          ))}
+          <button type="button" className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }} onClick={() => onOpenLink('privacy-policy')}>Privacy Policy</button>
+          <button type="button" className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }} onClick={() => onOpenLink('safety-center')}>Safety Center</button>
+          <button type="button" className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }} onClick={() => onOpenLink('parents-guide')}>Parents' Guide</button>
         </div>
         <div className="font-bold text-sm opacity-60" style={{ color: '#705d00' }}>
           © 2026 RePaIR

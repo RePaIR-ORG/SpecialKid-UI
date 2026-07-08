@@ -142,7 +142,7 @@ npm run dev
 
 ---
 
-For backend API documentation, see: https://github.com/RePaIR-ORG/RePair-Backend
+For backend , see: https://github.com/RePaIR-ORG/RePair-Backend
 
 ---
 
@@ -155,7 +155,7 @@ For backend API documentation, see: https://github.com/RePaIR-ORG/RePair-Backend
 ## Demo
 - Live Demo: https://special-kid-ui.vercel.app
 - Backend Repo Github Link: https://github.com/RePaIR-ORG/RePair-Backend
-- Specicalist UI Live Demo : repair-specialist.vercel.app/
+- Specicalist UI Live Demo : https://repair-specialist.vercel.app/
 - Specicalist UI Github Link : https://github.com/RePaIR-ORG/Specialist-UI
 ---
 
@@ -242,7 +242,7 @@ No license is specified for this repository yet. Add a valid open-source license
 ## Author
 - Name: RePair Project Team
 - GitHub: https://github.com/RePaIR-ORG
-- Email: [repair email ]
+- Email: [ repair email ]
 
 ---
 
