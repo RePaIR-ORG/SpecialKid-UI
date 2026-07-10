@@ -1,0 +1,164 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>The Kinetic Playhouse - Trampoline Task</title>
+<!-- Font and Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-dim": "#9a2100",
+                        "on-tertiary-fixed": "#360600",
+                        "outline": "#72739e",
+                        "error": "#b41340",
+                        "error-dim": "#a70138",
+                        "on-error": "#ffefef",
+                        "secondary": "#6d5a00",
+                        "on-primary-fixed": "#000000",
+                        "background": "#f8f5ff",
+                        "on-tertiary": "#ffefec",
+                        "on-secondary": "#fff2ce",
+                        "on-tertiary-fixed-variant": "#721600",
+                        "surface-container": "#e8e6ff",
+                        "surface-container-high": "#e1e0ff",
+                        "secondary-fixed": "#fdd400",
+                        "tertiary-container": "#ff9479",
+                        "on-background": "#2a2b51",
+                        "error-container": "#f74b6d",
+                        "secondary-fixed-dim": "#edc600",
+                        "surface-bright": "#f8f5ff",
+                        "secondary-container": "#fdd400",
+                        "on-secondary-container": "#594a00",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#004be2",
+                        "on-primary-container": "#001b61",
+                        "on-primary": "#f2f1ff",
+                        "primary-dim": "#0041c7",
+                        "surface-tint": "#004be2",
+                        "surface-container-highest": "#dbd9ff",
+                        "surface-container-low": "#f2efff",
+                        "primary-fixed": "#809bff",
+                        "on-secondary-fixed": "#433700",
+                        "on-error-container": "#510017",
+                        "surface-variant": "#dbd9ff",
+                        "on-primary-fixed-variant": "#002376",
+                        "inverse-primary": "#6889ff",
+                        "on-secondary-fixed-variant": "#645300",
+                        "on-surface-variant": "#575881",
+                        "secondary-dim": "#5f4e00",
+                        "on-tertiary-container": "#621200",
+                        "primary-fixed-dim": "#6c8cff",
+                        "inverse-surface": "#08082f",
+                        "surface-dim": "#d1d0ff",
+                        "on-surface": "#2a2b51",
+                        "tertiary-fixed": "#ff9479",
+                        "outline-variant": "#a9a9d7",
+                        "tertiary": "#af2700",
+                        "tertiary-fixed-dim": "#ff7d5c",
+                        "surface": "#f8f5ff",
+                        "inverse-on-surface": "#9999c6",
+                        "primary-container": "#809bff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bubble-shadow {
+            box-shadow: 0 10px 40px -10px rgba(42, 43, 81, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-yellow {
+            text-shadow: 0 0 15px rgba(253, 212, 0, 0.6);
+        }
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-[#f8f5ff] text-on-surface min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="w-full px-8 py-8 flex items-center justify-between z-10">
+<div class="text-2xl font-black text-[#2962FF] dark:text-blue-500 tracking-tight font-display">RePaIR</div>
+<div class="w-[80px]"></div>
+<!-- Spacer to keep center alignment for the title -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center px-6 relative max-w-4xl pb-32 justify-center mx-auto p-4"><h1 class="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight text-center mb-12">Today I feel <span class="text-secondary-container drop-shadow-sm">Happy</span></h1>
+<!-- Task Card Container -->
+<div class="relative w-full bg-surface-container-lowest rounded-xl shadow-[0_20px_60px_rgba(42,43,81,0.08)] flex flex-col items-center transition-all duration-500 hover:shadow-[0_30px_80px_rgba(42,43,81,0.12)] md:p-8 p-8 md:p-12 mx-auto max-w-5xl" style="transform: rotateY(2.49deg) rotateX(-6.965deg);">
+<!-- Header Group -->
+<div class="flex items-center gap-6 mb-10">
+<h2 class="text-4xl md:text-5xl font-black text-on-surface tracking-tighter uppercase">TRAMPOLINE JUMPING</h2>
+<button class="w-16 h-16 md:w-20 md:h-20 bg-primary rounded-full flex items-center justify-center text-white shadow-[0_8px_0_#0038aa] transition-all hover:scale-105 active:translate-y-1 active:shadow-none btn-press"><span class="material-symbols-outlined text-4xl md:text-5xl" style="font-variation-settings: 'FILL' 1;">volume_up</span></button>
+</div>
+<!-- Illustration Area -->
+<div class="w-full aspect-[4/3] rounded-lg bg-surface-container-low overflow-hidden relative group border-4 border-surface-container mb-12"><img alt="Trampoline Jumping Activity" class="w-full h-full object-contain p-4 md:p-8" src="https://lh3.googleusercontent.com/aida/AP1WRLvs5-5A-RJAy1800ilAUOl1qnlGv1v4roRs_2OJZvwczh2VO2rZ6TauseXcivd-pQmuiGCGzlL1y7zcavXEZRItPODbnL-KBt1aRiHWxH0rJER5AKKNdQO8Vo-deRNN-zaKzM_dBD1YoFiOHTSORBEs88YshRR3Li-C9VznpwNHa4xcAuqJ0ZLFG_R3ODv0nx1IEyGesJXW1xKvfztYGm21YIww6WBL7jpnFPA3rNkQ2cOcFav6Hljh9AEG"></div>
+<!-- Task Button -->
+<button class="w-full max-w-md py-6 bg-primary text-white text-3xl font-black rounded-full shadow-[0_8px_0_#0038aa] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:translate-y-1 active:shadow-none btn-press font-display">I'm Done! ★</button>
+</div>
+<!-- Pagination Dots -->
+<div class="flex gap-4 mt-10"><div class="w-4 h-4 rounded-full bg-surface-container-highest"></div><div class="w-4 h-4 rounded-full bg-primary active-dot"></div><div class="w-4 h-4 rounded-full bg-surface-container-highest"></div><div class="w-4 h-4 rounded-full bg-surface-container-highest"></div></div>
+<!-- Robot Companion -->
+
+</main>
+<!-- Interactive script for subtle feel -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('.bg-surface-container-lowest');
+            
+            // Add a subtle magnetic effect to the main card
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 100;
+                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+
+            // Button click sound effect (visual simulation)
+            const button = document.querySelector('button.group');
+            button.addEventListener('click', () => {
+                confettiEffect();
+            });
+
+            function confettiEffect() {
+                // This is a placeholder for a potential confetti burst interaction
+                console.log('Task Completed!');
+            }
+        });
+    </script>
+
+
+
+
+
+
+<div class="fixed bottom-8 left-8 w-48 h-48 md:w-64 md:h-64 z-40 floating-robot pointer-events-none lg:pointer-events-auto animate-bounce-subtle"><img alt="Happy Robot Buddy" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLtnC4-fAlroWvjA_CH78rftMlGtcNogvDcY9XVP-26dfpWt-SMpPd3Kmb-LtTBu8G7qa3XYpa6WB5YYCbFZrqSZ-AEr4DyqgsPB9IM2eC-fZjvSrHGZQR8Z0IIP65OfYwbUoxl2aepUr1LDfOpeRHEa8hWxcxrnL0Xa_r-VSuky3xSkDdddG5IGQDWVFFhNu5uCkkbfx9DIKh21FpWb7thmcksavKTNx09DY3b7_05vjgRK_YtrLRBFXSY"></div></body></html>

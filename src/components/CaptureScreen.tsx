@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import Lottie from 'lottie-react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
 import seeMeRobotAnimation from '../../lotte files/see me robot animated.json';
 
 interface CaptureScreenProps {
@@ -19,6 +19,9 @@ const STATUS_MESSAGES = [
 export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack, onOpenLink }) => {
   const [statusIndex, setStatusIndex] = useState(0);
   const [statusVisible, setStatusVisible] = useState(true);
+  const [showTextInput, setShowTextInput] = useState(false);
+  const [typedMood, setTypedMood] = useState('');
+  const [submittedMood, setSubmittedMood] = useState('');
 
   // Cycle through status messages with a fade effect
   useEffect(() => {
@@ -68,27 +71,10 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack, onOpenLink
           </div>
 
           {/* Nav links (desktop) */}
-          <nav className="hidden md:flex gap-8 items-center">
+          <nav className="hidden md:flex gap-6 items-center ml-auto">
             <button type="button" onClick={() => onOpenLink('help')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Help</button>
             <button type="button" onClick={() => onOpenLink('exit')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Exit</button>
-            <button type="button" onClick={() => onOpenLink('privacy-policy')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Privacy Policy</button>
-            <button type="button" onClick={() => onOpenLink('safety-center')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Safety Center</button>
-            <button type="button" onClick={() => onOpenLink('parents-guide')} className="font-bold text-base hover:opacity-70 transition-opacity" style={{ color: '#464555' }}>Parents' Guide</button>
           </nav>
-
-          {/* Avatar button */}
-          <div className="flex items-center gap-2">
-            <button
-              className="w-12 h-12 rounded-full flex items-center justify-center"
-              style={{
-                background: '#5d5fef',
-                color: '#faf7ff',
-                borderBottom: '4px solid #2e2bc2',
-              }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>person</span>
-            </button>
-          </div>
         </div>
       </header>
 
@@ -210,15 +196,56 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack, onOpenLink
             </div>
 
             {/* Alternative action */}
-            <button
-              className="mt-2 flex items-center gap-2 font-bold text-base hover:underline transition-all active:scale-95 decoration-2 underline-offset-4"
-              style={{ color: '#4343d5', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>
-                keyboard
-              </span>
-              I'd rather tap my mood
-            </button>
+            {!showTextInput ? (
+              <button
+                type="button"
+                onClick={() => setShowTextInput(true)}
+                className="mt-2 flex items-center gap-2 font-bold text-base hover:underline transition-all active:scale-95 decoration-2 underline-offset-4"
+                style={{ color: '#4343d5', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: '22px', fontVariationSettings: "'FILL' 1" }}>
+                  keyboard
+                </span>
+                I'd rather type my mood
+              </button>
+            ) : (
+              <div className="mt-2 w-full max-w-sm rounded-[1.5rem] border border-[#dfe2ee] bg-[#f8f5ff] p-4 shadow-sm">
+                <label className="mb-2 block text-sm font-semibold text-[#4343d5]" htmlFor="capture-mood-input">
+                  Type your mood
+                </label>
+                <textarea
+                  id="capture-mood-input"
+                  value={typedMood}
+                  onChange={(event) => setTypedMood(event.target.value)}
+                  placeholder="I feel calm, excited, tired..."
+                  className="min-h-24 w-full rounded-[1rem] border border-[#c7c4d7] bg-white px-4 py-3 text-base text-[#171c24] outline-none focus:border-[#4343d5]"
+                />
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmittedMood(typedMood.trim());
+                      setTypedMood('');
+                      setShowTextInput(false);
+                    }}
+                    className="flex items-center gap-2 rounded-full bg-[#4343d5] px-4 py-2 text-sm font-semibold text-white"
+                  >
+                    <Send className="h-4 w-4" />
+                    Send
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowTextInput(false)}
+                    className="text-sm font-semibold text-[#575881]"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                {submittedMood && (
+                  <p className="mt-3 text-sm font-semibold text-[#2a2b51]">You shared: {submittedMood}</p>
+                )}
+              </div>
+            )}
           </motion.div>
         </div>
       </main>
@@ -227,16 +254,8 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({ onBack, onOpenLink
       <footer
         className="flex flex-col md:flex-row justify-between items-center w-full px-6 py-8 gap-4"
         style={{ background: '#f0f3ff', borderTop: '4px solid #dfe2ee' }}
-      >
-        <div className="flex flex-col items-center md:items-start gap-1">
-          <div
-            className="font-black text-xl"
-            style={{ color: '#4343d5', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-          >
-            RePaIR
-          </div>
-          <div className="font-bold text-sm" style={{ color: '#464555', opacity: 0.7 }}>© 2026 RePaIR</div>
-        </div>
+> 
+        <div className="font-bold text-sm" style={{ color: '#464555', opacity: 0.7 }}>© 2026 RePaIR</div>
       </footer>
 
       <style>{`

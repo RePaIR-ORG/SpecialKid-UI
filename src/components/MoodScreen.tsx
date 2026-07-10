@@ -11,6 +11,7 @@ interface MoodScreenProps {
   onBack: () => void;
   onShowHistory: () => void;
   onOpenLink: (link: 'settings' | 'help' | 'profile') => void;
+  onMoodSelect?: (moodId: string) => void;
 }
 
 // ─── Mood data ────────────────────────────────────────────────────────────────
@@ -127,7 +128,7 @@ const variants = {
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory, onOpenLink }) => {
+export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory, onOpenLink, onMoodSelect }) => {
   const [[activeIndex, direction], setPage] = useState<[number, number]>([0, 0]);
   const dragStartX = useRef<number>(0);
 
@@ -172,18 +173,8 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory, o
           </span>
         </div>
         <div className="flex items-center gap-5">
-          <button onClick={() => onOpenLink('settings')} className="hover:opacity-70 transition-opacity active:scale-95 cursor-pointer" style={{ color: '#575881' }} aria-label="Settings">
-            <span className="material-symbols-outlined">settings</span>
-          </button>
           <button onClick={() => onOpenLink('help')} className="hover:opacity-70 transition-opacity active:scale-95 cursor-pointer" style={{ color: '#575881' }} aria-label="Help">
             <span className="material-symbols-outlined">help</span>
-          </button>
-          <button onClick={() => onOpenLink('profile')} className="w-10 h-10 rounded-full overflow-hidden border-2 cursor-pointer" style={{ borderColor: '#dbd9ff' }} aria-label="Student profile">
-            <img
-              alt="User Profile Avatar"
-              className="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1-8xXu2ZbTKNN5K9hgC4lQ9NR0zBNrfrcZg9m4pP4e-iDLz3YYqvsdcOCH676B7xlZCJvF39-kQEuFcPmSvg4z7obOBuI08zztgPMgEoKpplnlJseDnCXzrsfV--FqAr7AhvQm_IQK-THR3omjpy0CoJnCE4iBrIPiNSKvVgTJ0ZO9FBlcqBrgUY3giC4JQ-mZ8jrr5hisxjfGkqQ7nxUqiD_jWxttEVd8iiRVkEq-1-LAY0BRTSR5MnYwwtPxUMF-elXnvudxTll"
-            />
           </button>
         </div>
       </header>
@@ -274,6 +265,7 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory, o
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97, y: 4 }}
+                  onClick={() => onMoodSelect?.(mood.id)}
                   className="relative flex items-center gap-4 px-12 py-7 rounded-full font-black overflow-hidden cursor-pointer"
                   style={{
                     background: mood.btnBg,
@@ -352,8 +344,8 @@ export const MoodScreen: React.FC<MoodScreenProps> = ({ onBack, onShowHistory, o
         </a>
         <button
           type="button"
-          className="flex flex-col items-center justify-center rounded-full px-8 py-2 transition-all duration-300 cursor-pointer"
-          style={{ background: '#dbd9ff', color: '#2962FF' }}
+          className="flex flex-col items-center justify-center rounded-full px-8 py-2 transition-all duration-300 cursor-pointer hover:bg-[#f2efff]"
+          style={{ color: '#575881' }}
           onClick={onShowHistory}
         >
           <span className="material-symbols-outlined">calendar_month</span>

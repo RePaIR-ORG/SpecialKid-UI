@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
+import Lottie from 'lottie-react';
+import hearingRobotAnimation from '../../lotte files/hearing robot.json';
 
 interface TalkScreenProps {
   onBack: () => void;
@@ -9,6 +11,9 @@ interface TalkScreenProps {
 
 export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) => {
   const [isListening, setIsListening] = useState(true);
+  const [showTextInput, setShowTextInput] = useState(false);
+  const [typedMood, setTypedMood] = useState('');
+  const [submittedMood, setSubmittedMood] = useState('');
 
   const toggleListening = () => setIsListening((prev) => !prev);
 
@@ -46,7 +51,7 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) =>
               RePaIR
             </button>
           </div>
-          <div className="flex gap-8 items-center">
+          <div className="ml-auto flex gap-6 items-center">
             <button
               type="button"
               onClick={() => onOpenLink('help')}
@@ -64,18 +69,6 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) =>
             >
               <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>logout</span>
               Exit
-            </button>
-            <button type="button" onClick={() => onOpenLink('privacy-policy')} className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1" style={{ color: '#464555' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>privacy_tip</span>
-              Privacy Policy
-            </button>
-            <button type="button" onClick={() => onOpenLink('safety-center')} className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1" style={{ color: '#464555' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>shield</span>
-              Safety Center
-            </button>
-            <button type="button" onClick={() => onOpenLink('parents-guide')} className="font-bold text-base hover:opacity-70 transition-opacity flex items-center gap-1" style={{ color: '#464555' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>family_restroom</span>
-              Parents' Guide
             </button>
           </div>
         </div>
@@ -101,40 +94,12 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) =>
                 className="w-64 h-64 md:w-[420px] md:h-[420px] bg-white rounded-3xl p-6 flex items-center justify-center group-hover:scale-[1.02] transition-transform duration-300"
                 style={{ boxShadow: '0 12px 40px rgba(67,67,213,0.10)', border: '3px solid #e1e0ff' }}
               >
-                {/* Robot SVG – listening pose */}
-                <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-lg">
-                  {/* Body */}
-                  <rect x="45" y="100" width="110" height="90" rx="22" fill="#5d5fef" />
-                  {/* Head */}
-                  <rect x="55" y="42" width="90" height="72" rx="20" fill="#4343d5" />
-                  {/* Eyes */}
-                  <circle cx="80" cy="72" r="13" fill="#fdd400" />
-                  <circle cx="120" cy="72" r="13" fill="#fdd400" />
-                  <circle cx="83" cy="70" r="5.5" fill="#221b00" />
-                  <circle cx="123" cy="70" r="5.5" fill="#221b00" />
-                  {/* Antenna */}
-                  <line x1="100" y1="42" x2="100" y2="20" stroke="#c1c1ff" strokeWidth="4" strokeLinecap="round" />
-                  <circle cx="100" cy="14" r="8" fill="#fdd400" stroke="#221b00" strokeWidth="2.5" />
-                  {/* Ear / hand near ear - listening pose */}
-                  <rect x="10" y="105" width="35" height="18" rx="9" fill="#4343d5" />
-                  <circle cx="13" cy="114" r="11" fill="#c1c1ff" />
-                  {/* Other arm */}
-                  <rect x="155" y="105" width="35" height="18" rx="9" fill="#4343d5" />
-                  <circle cx="187" cy="114" r="11" fill="#c1c1ff" />
-                  {/* Sound waves from ear */}
-                  <path d="M 28 100 Q 20 108 28 116" stroke="#fdd400" strokeWidth="3" fill="none" strokeLinecap="round" />
-                  <path d="M 20 95 Q 8 108 20 122" stroke="#fdd400" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.6" />
-                  {/* Legs */}
-                  <rect x="63" y="184" width="28" height="24" rx="9" fill="#2e2bc2" />
-                  <rect x="109" y="184" width="28" height="24" rx="9" fill="#2e2bc2" />
-                  {/* Chest speaker grille */}
-                  <rect x="76" y="120" width="48" height="30" rx="10" fill="#6466f5" />
-                  <circle cx="88" cy="135" r="4" fill="#c1c1ff" />
-                  <circle cx="100" cy="135" r="4" fill="#c1c1ff" />
-                  <circle cx="112" cy="135" r="4" fill="#c1c1ff" />
-                  {/* Mouth - open, listening */}
-                  <path d="M 78 95 Q 100 107 122 95" stroke="#fdd400" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-                </svg>
+                <Lottie
+                  animationData={hearingRobotAnimation}
+                  loop
+                  autoplay
+                  className="w-full h-full"
+                />
               </div>
             </div>
           </motion.div>
@@ -237,13 +202,54 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) =>
             </div>
 
             {/* Alternative action */}
-            <button
-              className="flex items-center gap-2 font-bold text-base hover:underline transition-all active:scale-95"
-              style={{ color: '#4343d5', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
-            >
-              I'd rather type my mood
-              <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>keyboard</span>
-            </button>
+            {!showTextInput ? (
+              <button
+                type="button"
+                onClick={() => setShowTextInput(true)}
+                className="flex items-center gap-2 font-bold text-base hover:underline transition-all active:scale-95"
+                style={{ color: '#4343d5', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}
+              >
+                I'd rather type my mood
+                <span className="material-symbols-outlined" style={{ fontSize: '22px' }}>keyboard</span>
+              </button>
+            ) : (
+              <div className="w-full max-w-sm rounded-[1.5rem] border border-[#dfe2ee] bg-[#f8f5ff] p-4 shadow-sm">
+                <label className="mb-2 block text-sm font-semibold text-[#4343d5]" htmlFor="talk-mood-input">
+                  Type your mood
+                </label>
+                <textarea
+                  id="talk-mood-input"
+                  value={typedMood}
+                  onChange={(event) => setTypedMood(event.target.value)}
+                  placeholder="I feel calm, excited, tired..."
+                  className="min-h-24 w-full rounded-[1rem] border border-[#c7c4d7] bg-white px-4 py-3 text-base text-[#171c24] outline-none focus:border-[#4343d5]"
+                />
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmittedMood(typedMood.trim());
+                      setTypedMood('');
+                      setShowTextInput(false);
+                    }}
+                    className="flex items-center gap-2 rounded-full bg-[#4343d5] px-4 py-2 text-sm font-semibold text-white"
+                  >
+                    <Send className="h-4 w-4" />
+                    Send
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowTextInput(false)}
+                    className="text-sm font-semibold text-[#575881]"
+                  >
+                    Cancel
+                  </button>
+                </div>
+                {submittedMood && (
+                  <p className="mt-3 text-sm font-semibold text-[#2a2b51]">You shared: {submittedMood}</p>
+                )}
+              </div>
+            )}
           </motion.div>
         </div>
       </main>
@@ -252,12 +258,7 @@ export const TalkScreen: React.FC<TalkScreenProps> = ({ onBack, onOpenLink }) =>
       <footer
         className="flex flex-col md:flex-row justify-between items-center w-full px-6 py-8 gap-4"
         style={{ background: '#f8f5ff', borderTop: '3px solid #dfe2ee' }}
-      >
-        <div className="flex flex-wrap justify-center gap-8">
-          <button type="button" onClick={() => onOpenLink('privacy-policy')} className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}>Privacy Policy</button>
-          <button type="button" onClick={() => onOpenLink('safety-center')} className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}>Safety Center</button>
-          <button type="button" onClick={() => onOpenLink('parents-guide')} className="font-bold text-base hover:opacity-70 transition-all active:scale-95" style={{ color: '#464555', fontFamily: "'Atkinson Hyperlegible Next', sans-serif" }}>Parents' Guide</button>
-        </div>
+> 
         <div className="font-bold text-sm opacity-60" style={{ color: '#705d00' }}>© 2026 RePaIR</div>
       </footer>
 

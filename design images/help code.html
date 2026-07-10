@@ -1,0 +1,235 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>RePaIR Help Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Atkinson+Hyperlegible+Next:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#464555",
+                        "primary-container": "#5d5fef",
+                        "on-error": "#ffffff",
+                        "outline": "#767586",
+                        "on-secondary-container": "#6f5c00",
+                        "on-surface": "#171c24",
+                        "surface-container-low": "#f0f3ff",
+                        "surface": "#f9f9ff",
+                        "on-secondary-fixed": "#221b00",
+                        "on-primary-fixed": "#07006c",
+                        "surface-bright": "#f9f9ff",
+                        "surface-variant": "#dfe2ee",
+                        "tertiary": "#006465",
+                        "on-tertiary-container": "#dbfffe",
+                        "primary": "#4343d5",
+                        "outline-variant": "#c7c4d7",
+                        "on-tertiary-fixed-variant": "#004f50",
+                        "inverse-surface": "#2c3039",
+                        "inverse-on-surface": "#edf0fc",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#eaedf9",
+                        "tertiary-container": "#007f80",
+                        "surface-dim": "#d6dae5",
+                        "surface-container-high": "#e5e8f4",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#4849da",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e1e0ff",
+                        "background": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#544600",
+                        "inverse-primary": "#c1c1ff",
+                        "secondary-fixed-dim": "#e9c400",
+                        "primary-fixed-dim": "#c1c1ff",
+                        "on-primary-fixed-variant": "#2e2bc2",
+                        "on-background": "#171c24",
+                        "secondary": "#705d00",
+                        "secondary-container": "#fdd400",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#dfe2ee",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#faf7ff",
+                        "on-tertiary-fixed": "#002020",
+                        "tertiary-fixed": "#56f9f9",
+                        "tertiary-fixed-dim": "#26dcdd",
+                        "secondary-fixed": "#ffe170"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "lg": "48px",
+                        "xl": "80px",
+                        "margin-mobile": "16px",
+                        "sm": "12px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Atkinson Hyperlegible Next"],
+                        "label-bold": ["Atkinson Hyperlegible Next"],
+                        "button-text": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "body-lg": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-bold": ["18px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "700"}],
+                        "button-text": ["22px", {"lineHeight": "1.0", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+        }
+        .chunky-button {
+            border-bottom: 6px solid rgba(0, 0, 0, 0.2);
+            transition: all 0.1s ease-in-out;
+        }
+        .chunky-button:active {
+            transform: translateY(4px);
+            border-bottom-width: 2px;
+        }
+        .chunky-card {
+            border-bottom: 6px solid rgba(0, 0, 0, 0.1);
+        }
+        .custom-gradient-bg {
+            background: radial-gradient(circle at top left, #f9f9ff 0%, #f0f3ff 100%);
+        }
+        .robot-shadow {
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+    </style>
+</head>
+<body class="bg-surface custom-gradient-bg min-h-screen font-body-lg text-on-surface">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center w-full px-margin-mobile py-base md:px-margin-desktop bg-surface dark:bg-on-surface border-b-4 border-surface-variant sticky top-0 z-50">
+<div class="flex items-center gap-sm">
+<img alt="Small waving robot" class="w-10 h-10 robot-shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0c3QuEPWgcYe2QAcYuwYyvUMODTUQiCZct8NBKv2cLRjVlAdkfiVW8RHh98o-roxOxAhQjAFNTG1gLb_9JEymka6Apoq8IOF4f9Xr4tVqEZiHjT0rCLs_SNuKUatINVmuks6aBzfGwscRXJdUiAhZUByP9q7G6OagDNHNSG_5MBRZXkmrC4K9dGzPtSiQagBAIqIMq2OU2EnpbUAVXBXEWOa8XsnHhWTWE1RArk0RNPaXLao7jSVOlanC4CzczL5eYRo">
+<span class="font-headline-md text-headline-md font-extrabold text-primary dark:text-primary-fixed-dim tracking-tight">RePaIR Help Center</span>
+</div>
+<a class="chunky-button bg-primary-container text-on-primary-container px-md py-sm rounded-full font-button-text text-button-text flex items-center gap-xs" href="#">
+<span class="material-symbols-outlined">arrow_back</span>
+            Back to App
+        </a>
+</nav>
+<main class="max-w-6xl mx-auto px-margin-mobile py-xl md:px-gutter">
+<!-- Main Content Card -->
+<div class="bg-surface-container-lowest rounded-xl p-md md:p-lg chunky-card shadow-xl relative overflow-hidden" style="transform: translateY(0px);">
+<!-- Hero Greeting -->
+<div class="flex flex-col md:flex-row items-center gap-lg mb-xl">
+<div class="flex-1 text-center md:text-left">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-base">Need a Hand?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        I'm here to help you get back to learning and having fun! Choose a quick fix below or read our parent guide.
+                    </p>
+</div>
+<div class="flex-shrink-0">
+<img alt="Large turquoise waving robot mascot" class="w-48 h-48 md:w-64 md:h-64 robot-shadow animate-bounce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdqSLs3IbM9aWgITu9FQh7uQQN07G-leBQf5SUOfsmhgX2fRXfeaHIg6tAr6hIGmbhviYf21l3w8BjEHLPtZCmqoNsP8mvffG7y0HZWckb0Gk_dDG8WmwfWprfSKNuGtxuUQbV2c_Xxo57b77rizCx9SU0bJ4DXJoKmLL1qOLEZ3VFiYj0ejJBDfrPd7DD_eaM37BJRPwjFj9P-YX9l0AsVN7z0z3_BgWWbCqD-2YMRTnCFqTABKZlehQ4dstCG9ivdU0" style="animation-duration: 3s;">
+</div>
+</div>
+<!-- Child Support Section -->
+<div class="mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Quick Fixes</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card A: Microphone -->
+<button class="group chunky-card bg-secondary-container hover:bg-secondary transition-colors duration-200 rounded-lg p-lg text-left flex flex-col items-center justify-center gap-md" style="border-bottom-color: rgb(112, 93, 0); transform: translateY(0px);">
+<div class="w-20 h-20 bg-surface-container-lowest rounded-full flex items-center justify-center text-secondary shadow-inner">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-secondary-container group-hover:text-surface text-center">Microphone isn't working?</span>
+</button>
+<!-- Card B: Camera -->
+<button class="group chunky-card bg-tertiary-fixed-dim hover:bg-tertiary transition-colors duration-200 rounded-lg p-lg text-left flex flex-col items-center justify-center gap-md" style="border-bottom-color: rgb(0, 100, 101); transform: translateY(0px);">
+<div class="w-20 h-20 bg-surface-container-lowest rounded-full flex items-center justify-center text-tertiary shadow-inner">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-tertiary-fixed-variant group-hover:text-surface text-center">Camera can't see me?</span>
+</button>
+</div>
+</div>
+<!-- Parent Support Section -->
+<div class="bg-surface-container-low rounded-lg p-md md:p-lg border-2 border-outline-variant">
+<h2 class="font-label-bold text-label-bold text-primary flex items-center gap-xs mb-md uppercase tracking-wider">
+<span class="material-symbols-outlined">family_restroom</span>
+                    Parent Support &amp; Troubleshooting
+                </h2>
+<ul class="space-y-md">
+<li class="flex gap-md items-start p-md bg-surface-container-lowest rounded-md border-l-8 border-primary shadow-sm">
+<div class="mt-1 text-primary">
+<span class="material-symbols-outlined text-3xl">settings_input_antenna</span>
+</div>
+<div>
+<h3 class="font-label-bold text-label-bold text-on-surface mb-xs">Troubleshooting Inputs</h3>
+<p class="font-body-lg text-on-surface-variant">If a voice or facial scan fails, ensure your browser has explicit permissions granted for camera and microphone access. Check the lock icon in your address bar.</p>
+</div>
+</li>
+<li class="flex gap-md items-start p-md bg-surface-container-lowest rounded-md border-l-8 border-tertiary shadow-sm">
+<div class="mt-1 text-tertiary">
+<span class="material-symbols-outlined text-3xl">restart_alt</span>
+</div>
+<div>
+<h3 class="font-label-bold text-label-bold text-on-surface mb-xs">App Reset</h3>
+<p class="font-body-lg text-on-surface-variant">You can clear your localized application cache at any time to restart the onboarding journey from scratch. This fixes most common loading issues.</p>
+</div>
+</li>
+</ul>
+<div class="mt-lg flex justify-end">
+<button class="font-label-bold text-label-bold text-primary hover:underline flex items-center gap-xs">
+                        Contact Support Team
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-dim border-t-4 border-surface-variant w-full px-margin-mobile py-lg md:px-margin-desktop mt-xl">
+<div class="flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex items-center">
+
+<span class="text-on-surface-variant font-label-bold text-label-bold">© 2026 RePaIR</span>
+</div>
+<div class="flex gap-md">
+<a class="text-on-surface-variant font-label-bold text-label-bold hover:text-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-label-bold text-label-bold hover:text-primary transition-all" href="#">Safety Center</a>
+<a class="text-on-surface-variant font-label-bold text-label-bold hover:text-primary transition-all" href="#">Parents Guide</a>
+</div>
+</div>
+</footer>
+<script>
+        // Smooth interaction for buttons
+        document.querySelectorAll('.chunky-button, .chunky-card').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'translateY(4px)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'translateY(0px)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+
+
+</body></html>
