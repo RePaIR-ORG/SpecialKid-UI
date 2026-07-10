@@ -17,12 +17,16 @@ import {
   Sparkle,
   MessageCircle,
   X,
+<<<<<<< Updated upstream
   ShieldCheck,
   Lock,
   BookOpen,
   LifeBuoy,
   Mic,
   Camera,
+=======
+  LogOut
+>>>>>>> Stashed changes
 } from 'lucide-react';
 import wavingRobotAnimation from '../lotte files/waving robot.json';
 import supportRobotAnimation from '../lotte files/waving robot.json';
@@ -32,11 +36,12 @@ import angryRobotAnimation from '../lotte files/angry robot lotte.json';
 import tiredRobotAnimation from '../lotte files/tired robot lotte.json';
 import playDoughIllustration from './assets/images/play-dough.png';
 import MoodScreen from './components/MoodScreen';
-import JoinNowScreen from './components/JoinNowScreen';
+import LoginScreen from './components/JoinNowScreen';
 import HistoryScreen from './components/HistoryScreen';
 import MultimodalScreen from './components/MultimodalScreen';
 import TalkScreen from './components/TalkScreen';
 import CaptureScreen from './components/CaptureScreen';
+import { useStudentStore } from './useStudentStore';
 
 type InfoLink =
   | 'privacy-policy'
@@ -1213,7 +1218,12 @@ function TiredModeCarouselPage({ onBack }: { onBack: () => void }) {
 }
 
 export default function App() {
+<<<<<<< Updated upstream
   const [currentView, setCurrentView] = useState<AppView>('landing');
+=======
+  const { isAuthenticated, student, login, logout, isLoading } = useStudentStore();
+  const [currentView, setCurrentView] = useState<'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'login' | 'history'>('landing');
+>>>>>>> Stashed changes
   const [showMoodCheck, setShowMoodCheck] = useState(false);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [isWaving, setIsWaving] = useState(false);
@@ -1247,7 +1257,24 @@ export default function App() {
     { name: 'Anxious', icon: MessageCircle, color: 'bg-purple-100 text-purple-600 border-purple-300' },
   ];
 
+  // ── LOGIN SCREEN ────────────────────────────────────────────────────────────
+  if (currentView === 'login') {
+    return (
+      <LoginScreen
+        onBack={() => setCurrentView('landing')}
+        onOpenLink={(link) => openInfoLink(link as InfoLink)}
+        onLogin={async (username, password) => {
+          await login(username, password);
+          setTimeout(() => setCurrentView('multimodal'), 1200);
+        }}
+        isLoading={isLoading}
+      />
+    );
+  }
+
+  // ── AUTH-GATED SCREENS ──────────────────────────────────────────────────────
   if (currentView === 'multimodal') {
+    if (!isAuthenticated) { setCurrentView('login'); return null; }
     return (
       <MultimodalScreen
         onBack={() => setCurrentView('landing')}
@@ -1255,10 +1282,7 @@ export default function App() {
         onTalkToMe={() => setCurrentView('talk')}
         onSeeMe={() => setCurrentView('capture')}
         onOpenLink={(link) => {
-          if (link === 'exit') {
-            setCurrentView('landing');
-            return;
-          }
+          if (link === 'exit') { setCurrentView('landing'); return; }
           openInfoLink(link as InfoLink);
         }}
       />
@@ -1266,26 +1290,23 @@ export default function App() {
   }
 
   if (currentView === 'talk') {
+    if (!isAuthenticated) { setCurrentView('login'); return null; }
     return <TalkScreen onBack={() => setCurrentView('multimodal')} onOpenLink={(link) => {
-      if (link === 'exit') {
-        setCurrentView('landing');
-        return;
-      }
+      if (link === 'exit') { setCurrentView('landing'); return; }
       openInfoLink(link as InfoLink);
     }} />;
   }
 
   if (currentView === 'capture') {
+    if (!isAuthenticated) { setCurrentView('login'); return null; }
     return <CaptureScreen onBack={() => setCurrentView('multimodal')} onOpenLink={(link) => {
-      if (link === 'exit') {
-        setCurrentView('landing');
-        return;
-      }
+      if (link === 'exit') { setCurrentView('landing'); return; }
       openInfoLink(link as InfoLink);
     }} />;
   }
 
   if (currentView === 'mood') {
+    if (!isAuthenticated) { setCurrentView('login'); return null; }
     return (
       <MoodScreen 
         onBack={() => setCurrentView('multimodal')} 
@@ -1326,9 +1347,11 @@ export default function App() {
   }
 
   if (currentView === 'history') {
+    if (!isAuthenticated) { setCurrentView('login'); return null; }
     return <HistoryScreen onBackToMood={() => setCurrentView('mood')} />;
   }
 
+<<<<<<< Updated upstream
   if (currentView === 'join-now') {
     return (
       <JoinNowScreen
@@ -1355,6 +1378,9 @@ export default function App() {
     return <FullScreenInfoPage pageType="help" onBack={() => setCurrentView('landing')} onOpenLink={(link) => openInfoLink(link)} />;
   }
 
+=======
+  // ── LANDING PAGE ────────────────────────────────────────────────────────────
+>>>>>>> Stashed changes
   return (
     <div className="bg-gradient-to-br from-[#fbfaff] via-[#f8f5ff] to-[#f4f0ff] text-[#2a2b51] min-h-screen flex flex-col font-sans overflow-x-hidden relative selection:bg-[#2962FF] selection:text-white">
       
@@ -1366,6 +1392,33 @@ export default function App() {
             <span className="font-black text-2xl tracking-tighter text-[#2a2b51]">
               RePaIR
             </span>
+          </div>
+
+          {/* Auth Status */}
+          <div className="flex items-center gap-3">
+            {isAuthenticated && student ? (
+              <div className="flex items-center gap-3">
+                <div className="hidden sm:flex flex-col items-end">
+                  <span className="text-xs font-bold text-[#575881] uppercase tracking-wider">Signed in as</span>
+                  <span className="text-sm font-extrabold text-[#2a2b51]">{student.name}</span>
+                </div>
+                <button
+                  onClick={logout}
+                  className="flex items-center gap-2 bg-[#f2efff] hover:bg-[#dbd9ff] text-[#2a2b51] font-bold text-sm px-4 py-2 rounded-full transition-colors cursor-pointer"
+                  title="Sign out"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">Sign Out</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setCurrentView('login')}
+                className="flex items-center gap-2 bg-[#2962FF] hover:bg-[#1a52ef] text-white font-bold text-sm px-5 py-2.5 rounded-full transition-colors cursor-pointer shadow-[0_4px_0_0_#0033b3]"
+              >
+                Sign In
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -1427,6 +1480,18 @@ export default function App() {
               <Star className="w-6 h-6 text-[#433700] fill-[#433700]" />
             </motion.div>
 
+            {/* Greeting when authenticated */}
+            {isAuthenticated && student && (
+              <motion.div
+                className="mb-4 inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-full px-4 py-1.5 text-sm font-bold"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block" />
+                Welcome back, {student.name.split(' ')[0]}! 🎉
+              </motion.div>
+            )}
+
             {/* Main Page Title */}
             <motion.h1 
               className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter text-[#2a2b51] mb-8 leading-tight whitespace-nowrap"
@@ -1437,17 +1502,21 @@ export default function App() {
               Start Your Day
             </motion.h1>
 
-            {/* Interactive Section for 'How Are You Today' and Join Now */}
+            {/* Interactive Section */}
             <motion.div 
               className="flex flex-col gap-6 items-center lg:items-start w-full max-w-md"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             >
-              {/* Electric Blue Tactile Button */}
+              {/* Main CTA: requires login */}
               <motion.button 
                 onClick={() => {
-                  setCurrentView('multimodal');
+                  if (isAuthenticated) {
+                    setCurrentView('multimodal');
+                  } else {
+                    setCurrentView('login');
+                  }
                 }}
                   className="tactile-button w-full max-w-md mx-auto bg-[#2962FF] hover:bg-[#1a52ef] text-white py-6 px-10 md:py-7 md:px-12 rounded-full font-black text-2xl md:text-3xl tracking-tight shadow-[0_8px_0_0_#0033b3] cursor-pointer"
                 whileHover={{ scale: 1.02 }}
@@ -1456,14 +1525,16 @@ export default function App() {
                 How Are You Today?
               </motion.button>
 
-              {/* Join Now Link with animated hover Arrow */}
-              <button 
-                onClick={() => setCurrentView('join-now')}
-                className="text-[#575881] font-extrabold text-lg flex items-center gap-2 group hover:text-[#2962FF] transition-colors focus:outline-none cursor-pointer mt-2"
-              >
-                <span>Join Now</span>
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-              </button>
+              {/* Sign in link (only when not authenticated) */}
+              {!isAuthenticated && (
+                <button 
+                  onClick={() => setCurrentView('login')}
+                  className="text-[#575881] font-extrabold text-lg flex items-center gap-2 group hover:text-[#2962FF] transition-colors focus:outline-none cursor-pointer mt-2"
+                >
+                  <span>Sign In</span>
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
+                </button>
+              )}
             </motion.div>
 
           </div>
