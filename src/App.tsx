@@ -17,16 +17,13 @@ import {
   Sparkle,
   MessageCircle,
   X,
-<<<<<<< Updated upstream
   ShieldCheck,
   Lock,
   BookOpen,
   LifeBuoy,
   Mic,
   Camera,
-=======
   LogOut
->>>>>>> Stashed changes
 } from 'lucide-react';
 import wavingRobotAnimation from '../lotte files/waving robot.json';
 import supportRobotAnimation from '../lotte files/waving robot.json';
@@ -55,7 +52,7 @@ type InfoLink =
   | 'exit';
 
 type DesignLink = 'privacy-policy' | 'safety-center' | 'parents-guide' | 'help';
-type AppView = 'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'join-now' | 'history' | 'privacy-policy-page' | 'safety-center-page' | 'parents-guide-page' | 'help-page' | 'happy-pattern' | 'happy-trampoline' | 'happy-carousel' | 'sad-swinging' | 'angry-weighted-lap-pad' | 'tired-carousel';
+type AppView = 'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'login' | 'join-now' | 'history' | 'privacy-policy-page' | 'safety-center-page' | 'parents-guide-page' | 'help-page' | 'happy-pattern' | 'happy-trampoline' | 'happy-carousel' | 'sad-swinging' | 'angry-weighted-lap-pad' | 'tired-carousel';
 
 type FullScreenInfoView = 'privacy-policy-page' | 'safety-center-page' | 'parents-guide-page' | 'help-page';
 
@@ -1218,12 +1215,8 @@ function TiredModeCarouselPage({ onBack }: { onBack: () => void }) {
 }
 
 export default function App() {
-<<<<<<< Updated upstream
-  const [currentView, setCurrentView] = useState<AppView>('landing');
-=======
   const { isAuthenticated, student, login, logout, isLoading } = useStudentStore();
-  const [currentView, setCurrentView] = useState<'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'login' | 'history'>('landing');
->>>>>>> Stashed changes
+  const [currentView, setCurrentView] = useState<AppView>('landing');
   const [showMoodCheck, setShowMoodCheck] = useState(false);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [isWaving, setIsWaving] = useState(false);
@@ -1351,36 +1344,23 @@ export default function App() {
     return <HistoryScreen onBackToMood={() => setCurrentView('mood')} />;
   }
 
-<<<<<<< Updated upstream
-  if (currentView === 'join-now') {
-    return (
-      <JoinNowScreen
-        onBack={() => setCurrentView('landing')}
-        onOpenLink={(link) => openInfoLink(link as InfoLink)}
-        onLetsGo={() => setCurrentView('multimodal')}
-      />
-    );
-  }
-
   if (currentView === 'privacy-policy-page') {
-    return <FullScreenInfoPage pageType="privacy-policy" onBack={() => setCurrentView('landing')} onOpenLink={(link) => openInfoLink(link)} />;
+    return <FullScreenInfoPage pageType="privacy-policy" onBack={() => setCurrentView(returnView)} onOpenLink={(link) => openInfoLink(link)} />;
   }
 
   if (currentView === 'safety-center-page') {
-    return <FullScreenInfoPage pageType="safety-center" onBack={() => setCurrentView('landing')} onOpenLink={(link) => openInfoLink(link)} />;
+    return <FullScreenInfoPage pageType="safety-center" onBack={() => setCurrentView(returnView)} onOpenLink={(link) => openInfoLink(link)} />;
   }
 
   if (currentView === 'parents-guide-page') {
-    return <FullScreenInfoPage pageType="parents-guide" onBack={() => setCurrentView('landing')} onOpenLink={(link) => openInfoLink(link)} />;
+    return <FullScreenInfoPage pageType="parents-guide" onBack={() => setCurrentView(returnView)} onOpenLink={(link) => openInfoLink(link)} />;
   }
 
   if (currentView === 'help-page') {
-    return <FullScreenInfoPage pageType="help" onBack={() => setCurrentView('landing')} onOpenLink={(link) => openInfoLink(link)} />;
+    return <FullScreenInfoPage pageType="help" onBack={() => setCurrentView(returnView)} onOpenLink={(link) => openInfoLink(link)} />;
   }
 
-=======
   // ── LANDING PAGE ────────────────────────────────────────────────────────────
->>>>>>> Stashed changes
   return (
     <div className="bg-gradient-to-br from-[#fbfaff] via-[#f8f5ff] to-[#f4f0ff] text-[#2a2b51] min-h-screen flex flex-col font-sans overflow-x-hidden relative selection:bg-[#2962FF] selection:text-white">
       
