@@ -13,12 +13,6 @@ import wavingRobotAnimation from '../../lotte files/waving robot.json';
 interface LoginScreenProps {
   onBack: () => void;
   onOpenLink: (link: 'privacy-policy' | 'terms' | 'support') => void;
-<<<<<<< Updated upstream
-  onLetsGo: () => void;
-}
-
-export const JoinNowScreen: React.FC<JoinNowScreenProps> = ({ onBack, onOpenLink, onLetsGo }) => {
-=======
   onLogin: (username: string, password: string) => Promise<void>;
   isLoading: boolean;
 }
@@ -56,8 +50,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
       setError(err instanceof Error ? err.message : 'Something went wrong. Try again!');
     }
   };
-
->>>>>>> Stashed changes
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col items-center justify-between overflow-x-hidden selection:bg-secondary-container font-sans">
       {/* Header */}
@@ -175,20 +167,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                 </div>
               </div>
 
-<<<<<<< Updated upstream
-              {/* CTA Button */}
-              <div className="pt-4">
-                <button
-                  type="button"
-                  onClick={onLetsGo}
-                  className="group w-full relative inline-flex items-center justify-center px-8 py-5 bg-primary text-on-primary font-extrabold text-xl rounded-full transition-transform active:translate-y-1 hover:-translate-y-0.5 shadow-[0px_4px_0px_0px_#0041c7] cursor-pointer"
-                >
-                  <span className="flex items-center gap-2">
-                    Let's Go!
-                    <span className="material-symbols-outlined">rocket_launch</span>
-                  </span>
-                </button>
-=======
               {/* Password Field */}
               <div className="group">
                 <label className="block text-sm font-bold text-on-surface-variant mb-2 ml-4" htmlFor="sk-password">
@@ -217,7 +195,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
->>>>>>> Stashed changes
               </div>
 
               {/* Submit CTA */}
