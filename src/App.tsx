@@ -6,8 +6,8 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Lottie from 'lottie-react';
-import { 
-  Star, 
+import {
+  Star,
   ArrowRight,
   ArrowLeft,
   Sparkles,
@@ -38,6 +38,7 @@ import HistoryScreen from './components/HistoryScreen';
 import MultimodalScreen from './components/MultimodalScreen';
 import TalkScreen from './components/TalkScreen';
 import CaptureScreen from './components/CaptureScreen';
+import TasksForMoodScreen from './components/TasksForMoodScreen';
 import { useStudentStore } from './useStudentStore';
 
 type InfoLink =
@@ -1219,6 +1220,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<AppView>('landing');
   const [showMoodCheck, setShowMoodCheck] = useState(false);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
+  const [selectedMoodConfig, setSelectedMoodConfig] = useState<{ id: string; label: string; emoji: string } | null>(null);
   const [isWaving, setIsWaving] = useState(false);
   const [returnView, setReturnView] = useState<AppView>('landing');
 
@@ -1300,23 +1302,25 @@ export default function App() {
 
   if (currentView === 'mood') {
     if (!isAuthenticated) { setCurrentView('login'); return null; }
+
+    // The MOODS config mirrors MoodScreen's MOODS array
+    const MOOD_META: Record<string, { label: string; emoji: string }> = {
+      happy: { label: 'Happy!', emoji: '😊' },
+      sad: { label: 'Sad', emoji: '😢' },
+      angry: { label: 'Angry', emoji: '😡' },
+      tired: { label: 'Tired', emoji: '🥱' },
+    };
+
     return (
-      <MoodScreen 
-        onBack={() => setCurrentView('multimodal')} 
+      <MoodScreen
+        onBack={() => setCurrentView('multimodal')}
         onShowHistory={() => setCurrentView('history')}
         onOpenLink={(link) => openInfoLink(link as InfoLink)}
         onMoodSelect={(moodId) => {
-          if (moodId === 'happy') {
-            setCurrentView('happy-carousel');
-          }
-          if (moodId === 'sad') {
-            setCurrentView('sad-swinging');
-          }
-          if (moodId === 'angry') {
-            setCurrentView('angry-weighted-lap-pad');
-          }
-          if (moodId === 'tired') {
-            setCurrentView('tired-carousel');
+          const meta = MOOD_META[moodId];
+          if (meta) {
+            setSelectedMoodConfig({ id: moodId, label: meta.label, emoji: meta.emoji });
+            setCurrentView('mood-tasks');
           }
         }}
       />
@@ -1337,6 +1341,21 @@ export default function App() {
 
   if (currentView === 'tired-carousel') {
     return <TiredModeCarouselPage onBack={() => setCurrentView('mood')} />;
+  }
+
+  // ── MOOD TASKS — real tasks from API for the selected mood ──────────────────
+  if (currentView === 'mood-tasks') {
+    if (!isAuthenticated || !student || !token) { setCurrentView('login'); return null; }
+    if (!selectedMoodConfig) { setCurrentView('mood'); return null; }
+    return (
+      <TasksForMoodScreen
+        moodId={selectedMoodConfig.id}
+        moodLabel={selectedMoodConfig.label}
+        moodEmoji={selectedMoodConfig.emoji}
+        token={token}
+        onBack={() => setCurrentView('mood')}
+      />
+    );
   }
 
   if (currentView === 'history') {
@@ -1363,7 +1382,7 @@ export default function App() {
   // ── LANDING PAGE ────────────────────────────────────────────────────────────
   return (
     <div className="bg-gradient-to-br from-[#fbfaff] via-[#f8f5ff] to-[#f4f0ff] text-[#2a2b51] min-h-screen flex flex-col font-sans overflow-x-hidden relative selection:bg-[#2962FF] selection:text-white">
-      
+
       {/* Top Header */}
       <header className="w-full z-40 bg-white/45 backdrop-blur-md border-b-2 border-[#f2efff]">
         <div className="flex justify-between items-center w-full px-8 py-5 max-w-7xl mx-auto">
@@ -1405,10 +1424,10 @@ export default function App() {
 
       {/* Main Content Stage */}
       <main className="flex-1 flex flex-col lg:flex-row items-center justify-center py-12 px-6 sm:px-12 lg:px-24 max-w-7xl mx-auto w-full gap-12 lg:gap-24 relative">
-        
+
         {/* Left Side: Waving Robot Card Container */}
         <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-          <motion.div 
+          <motion.div
             className="relative w-full max-w-md aspect-square bg-white rounded-[2.5rem] p-6 shadow-[0_20px_50px_rgba(42,43,81,0.06)] border border-[#dbd9ff]/30 flex items-center justify-center overflow-hidden group"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1416,7 +1435,7 @@ export default function App() {
           >
             {/* Subtle radial yellow glow behind the card on hover */}
             <div className="absolute inset-0 bg-[#fdd400]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2.5rem]"></div>
-            
+
             {/* Embedded waving robot animation */}
             <motion.div
               className="w-full h-full relative z-10 rounded-[2rem] overflow-hidden"
@@ -1448,9 +1467,9 @@ export default function App() {
         {/* Right Side: Text & CTA Button Container */}
         <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:text-left">
           <div className="relative max-w-xl">
-            
+
             {/* Decorative Yellow Star Accent Tilted */}
-            <motion.div 
+            <motion.div
               className="absolute -top-12 -right-6 md:-right-8 w-14 h-14 bg-[#FDD400] rounded-full border-4 border-[#433700] flex items-center justify-center shadow-[0_4px_0_0_#433700] select-none cursor-pointer"
               style={{ rotate: 12 }}
               whileHover={{ rotate: 25, scale: 1.1 }}
@@ -1473,7 +1492,7 @@ export default function App() {
             )}
 
             {/* Main Page Title */}
-            <motion.h1 
+            <motion.h1
               className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter text-[#2a2b51] mb-8 leading-tight whitespace-nowrap"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -1483,14 +1502,14 @@ export default function App() {
             </motion.h1>
 
             {/* Interactive Section */}
-            <motion.div 
+            <motion.div
               className="flex flex-col gap-6 items-center lg:items-start w-full max-w-md"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             >
               {/* Main CTA: requires login */}
-              <motion.button 
+              <motion.button
                 onClick={() => {
                   if (isAuthenticated) {
                     setCurrentView('multimodal');
@@ -1498,7 +1517,7 @@ export default function App() {
                     setCurrentView('login');
                   }
                 }}
-                  className="tactile-button w-full max-w-md mx-auto bg-[#2962FF] hover:bg-[#1a52ef] text-white py-6 px-10 md:py-7 md:px-12 rounded-full font-black text-2xl md:text-3xl tracking-tight shadow-[0_8px_0_0_#0033b3] cursor-pointer"
+                className="tactile-button w-full max-w-md mx-auto bg-[#2962FF] hover:bg-[#1a52ef] text-white py-6 px-10 md:py-7 md:px-12 rounded-full font-black text-2xl md:text-3xl tracking-tight shadow-[0_8px_0_0_#0033b3] cursor-pointer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -1507,7 +1526,7 @@ export default function App() {
 
               {/* Sign in link (only when not authenticated) */}
               {!isAuthenticated && (
-                <button 
+                <button
                   onClick={() => setCurrentView('login')}
                   className="text-[#575881] font-extrabold text-lg flex items-center gap-2 group hover:text-[#2962FF] transition-colors focus:outline-none cursor-pointer mt-2"
                 >
@@ -1525,20 +1544,20 @@ export default function App() {
       {/* Mood Checker Drawer/Modal Interaction */}
       <AnimatePresence>
         {showMoodCheck && (
-          <motion.div 
+          <motion.div
             className="fixed inset-0 bg-[#2a2b51]/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <motion.div 
+            <motion.div
               className="bg-white rounded-[2.5rem] p-8 max-w-md w-full shadow-2xl relative border-2 border-[#dbd9ff]"
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 350 }}
             >
-              <button 
+              <button
                 onClick={() => setShowMoodCheck(false)}
                 className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer text-[#575881]"
               >
@@ -1549,7 +1568,7 @@ export default function App() {
                 <div>
                   <h3 className="text-3xl font-black tracking-tight text-[#2a2b51] mb-3">How Are You Today?</h3>
                   <p className="text-[#575881] font-medium text-sm mb-6">Select a feeling below to let your RePaIR companion know how to guide you.</p>
-                  
+
                   <div className="grid grid-cols-2 gap-3">
                     {moods.map((mood) => {
                       const IconComponent = mood.icon;
