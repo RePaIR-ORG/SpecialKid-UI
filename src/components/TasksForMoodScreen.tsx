@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, Clock, Loader2 } from 'lucide-react';
+import { CheckCircle2, Clock, Loader2, PartyPopper } from 'lucide-react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -58,19 +58,27 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
   token,
   onBack,
 }) => {
-  const [tasks, setTasks]       = useState<Task[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError]       = useState<string | null>(null);
+  const [tasks, setTasks]           = useState<Task[]>([]);
+  const [isLoading, setIsLoading]   = useState(true);
+  const [error, setError]           = useState<string | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const palette     = MOOD_ACCENT[moodId] ?? MOOD_ACCENT.happy;
-  const emojiColor  = MOOD_EMOJI_COLOR[moodId] ?? '#fdd400';
+  // Per-task completing state so we can disable the button while the PATCH fires
+  const [completing, setCompleting] = useState(false);
+  const [completeError, setCompleteError] = useState<string | null>(null);
+
+  // Celebration overlay when all tasks in the list are done
+  const [allDone, setAllDone] = useState(false);
+
+  const palette    = MOOD_ACCENT[moodId] ?? MOOD_ACCENT.happy;
+  const emojiColor = MOOD_EMOJI_COLOR[moodId] ?? '#fdd400';
 
   // ── Fetch ─────────────────────────────────────────────────────────────────
   useEffect(() => {
     const fetchTasks = async () => {
       setIsLoading(true);
       setError(null);
+      setAllDone(false);
       try {
         const res = await fetch(
           `${API_BASE}/student-auth/tasks?mood=${encodeURIComponent(moodId)}`,
@@ -89,19 +97,62 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
     fetchTasks();
   }, [moodId, token]);
 
-  // ── Slide helpers ─────────────────────────────────────────────────────────
-  const currentTask = tasks[activeSlide] ?? null;
+  // ── Mark task as Done ─────────────────────────────────────────────────────
+  const handleMarkDone = useCallback(async () => {
+    const currentTask = tasks[activeSlide];
+    if (!currentTask || currentTask.status === 'Completed') return;
 
-  const handleNext = () => {
+    setCompleting(true);
+    setCompleteError(null);
+    try {
+      const res = await fetch(
+        `${API_BASE}/student-auth/tasks/${currentTask._id}/complete`,
+        {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.message || 'Could not mark task as done.');
+      }
+
+      // Optimistically update local state so the badge flips immediately
+      setTasks((prev) =>
+        prev.map((t) =>
+          t._id === currentTask._id ? { ...t, status: 'Completed' } : t
+        )
+      );
+    } catch (err: unknown) {
+      setCompleteError(err instanceof Error ? err.message : 'Error completing task.');
+    } finally {
+      setCompleting(false);
+    }
+  }, [tasks, activeSlide, token]);
+
+  // ── Navigate to next task ─────────────────────────────────────────────────
+  const handleNext = useCallback(() => {
+    setCompleteError(null);
     if (activeSlide < tasks.length - 1) {
       setActiveSlide((p) => p + 1);
     } else {
-      onBack(); // finished all tasks
+      // Reached the last card — show celebration if every task is now Completed
+      const allCompleted = tasks.every((t) =>
+        t._id === tasks[activeSlide]._id ? true : t.status === 'Completed'
+      );
+      if (allCompleted) {
+        setAllDone(true);
+      } else {
+        onBack();
+      }
     }
-  };
+  }, [activeSlide, tasks, onBack]);
 
-  const isLast    = activeSlide === tasks.length - 1;
-  const isCompleted = currentTask?.status === 'Completed';
+  // ── Derived ───────────────────────────────────────────────────────────────
+  const currentTask  = tasks[activeSlide] ?? null;
+  const isCompleted  = currentTask?.status === 'Completed';
+  const isLast       = activeSlide === tasks.length - 1;
+  const doneCount    = tasks.filter((t) => t.status === 'Completed').length;
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -110,7 +161,16 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <header className="flex w-full items-center justify-between px-6 py-6 sm:px-8">
         <div className="text-2xl font-black tracking-tight text-[#2962FF]">RePaIR</div>
-        <div className="w-[80px]" />
+        {/* Overall progress pill */}
+        {tasks.length > 0 && (
+          <div
+            className="flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold text-white shadow"
+            style={{ background: palette.accent }}
+          >
+            <CheckCircle2 className="h-4 w-4" />
+            {doneCount} / {tasks.length} Done
+          </div>
+        )}
       </header>
 
       {/* ── Main ───────────────────────────────────────────────────────────── */}
@@ -165,8 +225,37 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
           </motion.div>
         )}
 
+        {/* ── All-Done Celebration ─────────────────────────────────────────── */}
+        {allDone && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            className="flex flex-col items-center justify-center py-16 gap-6 text-center"
+          >
+            <span className="text-[96px] leading-none">🎊</span>
+            <p className="text-4xl font-black text-[#2a2b51]">Amazing work!</p>
+            <p className="text-lg font-semibold text-[#575881]">
+              You completed all {tasks.length} task{tasks.length !== 1 ? 's' : ''}!
+            </p>
+            <div className="flex items-center gap-3 rounded-full bg-green-100 px-6 py-3 text-green-700 font-bold text-lg">
+              <CheckCircle2 className="h-6 w-6" />
+              Your specialist can see your progress!
+            </div>
+            <button
+              type="button"
+              onClick={onBack}
+              className="mt-2 flex items-center justify-center gap-2 rounded-full px-10 py-5 text-2xl font-black text-white transition-all hover:scale-[1.02] active:translate-y-1"
+              style={{ background: palette.accent, boxShadow: `0 8px 0 ${palette.shadow}` }}
+            >
+              <PartyPopper className="h-7 w-7" />
+              Go Back to Moods
+            </button>
+          </motion.div>
+        )}
+
         {/* ── Slideshow ───────────────────────────────────────────────────── */}
-        {!isLoading && !error && tasks.length > 0 && currentTask && (
+        {!isLoading && !error && tasks.length > 0 && currentTask && !allDone && (
           <>
             <AnimatePresence mode="wait">
               <motion.div
@@ -215,10 +304,14 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
                     {/* Status badge overlay */}
                     <div className="absolute top-2 right-2">
                       {isCompleted ? (
-                        <div className="flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
-                          <CheckCircle2 className="h-3.5 w-3.5" />
-                          Done
-                        </div>
+                        <motion.div
+                          initial={{ scale: 0.7, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          className="flex items-center gap-1 rounded-full bg-green-100 px-3 py-1.5 text-sm font-bold text-green-700 shadow"
+                        >
+                          <CheckCircle2 className="h-4 w-4" />
+                          Done! ✓
+                        </motion.div>
                       ) : (
                         <div
                           className="flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold"
@@ -239,24 +332,62 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
                   </p>
                 )}
 
-                {/* Action button */}
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="flex w-full max-w-md items-center justify-center rounded-full px-6 py-5 text-2xl font-black text-white transition-all hover:scale-[1.02] active:translate-y-1"
-                  style={{
-                    background: palette.accent,
-                    boxShadow: `0 8px 0 ${palette.shadow}`,
-                  }}
-                >
-                  {isLast ? '🎉 All Done!' : 'Next Task →'}
-                </button>
+                {/* ── Complete error ── */}
+                {completeError && (
+                  <p className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 text-center">
+                    {completeError}
+                  </p>
+                )}
+
+                {/* ── Action buttons ── */}
+                <div className="flex w-full max-w-md flex-col gap-4">
+
+                  {/* Mark as Done button — shown only if not yet completed */}
+                  {!isCompleted && (
+                    <button
+                      type="button"
+                      onClick={handleMarkDone}
+                      disabled={completing}
+                      className="flex w-full items-center justify-center gap-3 rounded-full px-6 py-5 text-xl font-black text-white transition-all hover:scale-[1.02] active:translate-y-1 disabled:opacity-60 disabled:cursor-not-allowed"
+                      style={{
+                        background: '#16a34a',
+                        boxShadow: '0 8px 0 #14532d',
+                      }}
+                    >
+                      {completing ? (
+                        <>
+                          <Loader2 className="h-6 w-6 animate-spin" />
+                          Saving…
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle2 className="h-6 w-6" />
+                          I Did It! ✓
+                        </>
+                      )}
+                    </button>
+                  )}
+
+                  {/* Next / Finish button */}
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="flex w-full items-center justify-center rounded-full px-6 py-4 text-lg font-black transition-all hover:scale-[1.02] active:translate-y-1"
+                    style={
+                      isCompleted
+                        ? { background: palette.accent, color: '#fff', boxShadow: `0 8px 0 ${palette.shadow}` }
+                        : { background: 'transparent', color: palette.accent, border: `3px solid ${palette.accent}` }
+                    }
+                  >
+                    {isLast ? '🎉 Finish!' : 'Next Task →'}
+                  </button>
+                </div>
               </motion.div>
             </AnimatePresence>
 
             {/* Progress dots */}
             <div className="mt-8 flex gap-4">
-              {tasks.map((_, index) => (
+              {tasks.map((t, index) => (
                 <button
                   key={index}
                   type="button"
@@ -264,6 +395,8 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
                   className={`h-3 rounded-full transition-all duration-300 ${
                     activeSlide === index
                       ? 'w-8 shadow-[0_0_15px_rgba(41,98,255,0.4)]'
+                      : t.status === 'Completed'
+                      ? 'w-3 bg-green-400'
                       : 'w-3 bg-[#dbd9ff]'
                   }`}
                   style={activeSlide === index ? { background: palette.accent } : {}}
@@ -275,6 +408,9 @@ export const TasksForMoodScreen: React.FC<TasksForMoodScreenProps> = ({
             {/* Task counter */}
             <p className="mt-4 text-sm font-semibold text-[#575881]">
               Task {activeSlide + 1} of {tasks.length}
+              {doneCount > 0 && (
+                <span className="ml-2 text-green-600">· {doneCount} completed</span>
+              )}
             </p>
           </>
         )}
