@@ -53,7 +53,7 @@ type InfoLink =
   | 'exit';
 
 type DesignLink = 'privacy-policy' | 'safety-center' | 'parents-guide' | 'help';
-type AppView = 'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'login' | 'join-now' | 'history' | 'privacy-policy-page' | 'safety-center-page' | 'parents-guide-page' | 'help-page' | 'happy-pattern' | 'happy-trampoline' | 'happy-carousel' | 'sad-swinging' | 'angry-weighted-lap-pad' | 'tired-carousel';
+type AppView = 'landing' | 'multimodal' | 'mood' | 'talk' | 'capture' | 'login' | 'join-now' | 'history' | 'mood-tasks' | 'privacy-policy-page' | 'safety-center-page' | 'parents-guide-page' | 'help-page' | 'happy-pattern' | 'happy-trampoline' | 'happy-carousel' | 'sad-swinging' | 'angry-weighted-lap-pad' | 'tired-carousel';
 
 type FullScreenInfoView = 'privacy-policy-page' | 'safety-center-page' | 'parents-guide-page' | 'help-page';
 
@@ -1230,6 +1230,27 @@ export default function App() {
     setTimeout(() => setIsWaving(false), 2000);
   };
 
+  // ── Log mood to the backend (fire-and-forget; doesn't block navigation) ──────
+  const logMoodToAPI = async (moodId: string) => {
+    if (!token) return;
+    try {
+      await fetch(
+        `${(import.meta.env.VITE_API_BASE_URL as string) || 'http://localhost:5000/api'}/student-auth/mood`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ mood: moodId }),
+        }
+      );
+    } catch {
+      // Non-critical: history may miss one entry, but app flow continues
+      console.warn('logMoodToAPI: network error, mood not persisted.');
+    }
+  };
+
   const openInfoLink = (link: InfoLink) => {
     if (link === 'exit') {
       setCurrentView('landing');
@@ -1320,6 +1341,8 @@ export default function App() {
           const meta = MOOD_META[moodId];
           if (meta) {
             setSelectedMoodConfig({ id: moodId, label: meta.label, emoji: meta.emoji });
+            // Persist the mood selection to the history database
+            logMoodToAPI(moodId);
             setCurrentView('mood-tasks');
           }
         }}
@@ -1359,8 +1382,8 @@ export default function App() {
   }
 
   if (currentView === 'history') {
-    if (!isAuthenticated) { setCurrentView('login'); return null; }
-    return <HistoryScreen onBackToMood={() => setCurrentView('mood')} />;
+    if (!isAuthenticated || !token) { setCurrentView('login'); return null; }
+    return <HistoryScreen token={token} onBackToMood={() => setCurrentView('mood')} />;
   }
 
   if (currentView === 'privacy-policy-page') {
