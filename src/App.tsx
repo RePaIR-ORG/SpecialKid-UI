@@ -1216,7 +1216,7 @@ function TiredModeCarouselPage({ onBack }: { onBack: () => void }) {
 }
 
 export default function App() {
-  const { isAuthenticated, student, login, logout, isLoading } = useStudentStore();
+  const { isAuthenticated, student, login, logout, isLoading, token } = useStudentStore();
   const [currentView, setCurrentView] = useState<AppView>('landing');
   const [showMoodCheck, setShowMoodCheck] = useState(false);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
